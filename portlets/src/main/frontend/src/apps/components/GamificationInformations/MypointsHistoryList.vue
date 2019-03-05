@@ -1,7 +1,7 @@
 <template class="">
 
-
-
+<div class="total">
+     <total-points-filter></total-points-filter>
 
  <table class="uiGrid table table-hover table-striped rule-table" hover striped>
 
@@ -44,6 +44,8 @@
         </div>
     </table>
 
+</div>
+
 </template>
 
 <script>
@@ -53,7 +55,6 @@
     import { Image } from 'bootstrap-vue/es/components';
     import axios from 'axios';
     import Avatar from 'vue-avatar'
-    import TotalPointsFilter from "./TotalPointsFilter";
     Vue.use(BootstrapVue);
     Vue.use(Popover);
     Vue.use(Image);
@@ -122,7 +123,7 @@
             showMore() {
                 let self = this;
                 self.loadCapacity += 10;
-                axios.get(`/rest/gamification/gameficationinformationsboard/history/all`, { params: { 'domain': self.domain, 'period': self.selectedPeriod, 'capacity': self.loadCapacity} })
+                axios.get(`/rest/gamification/gameficationinformationsboard/history/all`, { params: { 'capacity': self.loadCapacity} })
                     .then(response => {
                         this.users = response.data;
                     })
@@ -315,6 +316,7 @@
         .uiGrid.table tr td {
             border: transparent;
             padding: 5px 15px;
+            background:transparent;
         }
         .uiGrid.table thead tr:first-child {
             display: none;
@@ -341,21 +343,18 @@
            font-weight: bold;
            color: #666;
        }
+        .uiGrid.table td:nth-child(1) {
+           transform: translateY(35%);
+       }
+
+}
 
  @media (max-width: 434px) {
-
-       .uiGrid.table td:nth-child(5) {
-           margin-left: 50%;
-           transform: translateX(-50%);
-       }
        .uiGrid.table td:nth-child(2) {
            width: 55%;
            padding: initial;
        }
-        .uiGrid.table td:nth-child(1) {
-            transform: translateY(50%);
-        }
- }
+
 
        /*second vertion*/
        /*
