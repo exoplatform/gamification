@@ -3,184 +3,464 @@
     <b-container fluid class="p-4" id="reputation-badge-container">
 
         <div>
-            <h3> Social Badges</h3>
+            <h3> Social Badges </h3>
 
-            <b-col md="12" class="text-center no-padding" :key="badge" v-for="badge in badges" v-if="badge.zone === 'Social'"  >
+            <b-col md="12" class="text-center no-padding" >
 
-                <div class="protected content bg-indigo" >
-                    <div class="container text-center no-reveal">
-                        <div class="box">
-                            <b-img :id="'reputation'+badge.id" :src="badge.url" alt="Thumbnail" class="m-1" fluid height="200px"
+
+                <div class="protected content bg-indigo"  :key="prog" v-for="prog in progs" v-if="prog.label=== 'Social'"  >
+
+                    <div class="container text-center no-reveal" :key="badge" v-for="badge in badges" v-if="badge.zone === 'Social'" >
+
+
+                         <div class="box" v-if=" prog.value > badge.startScore">
+
+
+                          <b-img :id="'reputation'+badge.id" :src="badge.url" alt="Thumbnail" class="m-1" fluid height="200px"
+
                                    thumbnail width="200px"/>
 
                         </div>
-                        <div class="title-badges">{{badge.title}}</div>
 
+                        <div class="boxpercent" v-else-if="prog.value > badge.startScore || prog.value < badge.endScore " :id="'rep'+badge.id">
+                            <b-img thumbnail fluid :id="'reputation'+badge.id" :src="`/rest/gamification/reputation/badge/${badge.title}/avatar`" alt="Thumbnail"  class="greytwo" width="200px" height="200px"   />
+
+
+                            <progress-bar
+                                    :id="'rep'+badge.id"
+                                    class="cylinder-progress"
+                                    :stroke="defaultOptions.progress.color"
+                                    :stroke-width="progressWidth"
+                                    :animation="defaultOptions.progress.animation"
+                                    :options="defaultOptions"
+                                    :value=" (prog.value * 100)/((badge.endScore))"
+
+                            />
+
+
+
+                            <div class="title-badge">{{badge.title}}</div>
+                            <b-popover :content="`${badge.description}`" :placement="'top'" :target="'rep'+badge.id"
+                                       triggers="hover focus">
+                                <div class="level-badges">{{badge.level}}<br><span>Level</span>
+                                </div>
+                                <div class="title-badges">{{badge.title}}</div>
+                                <div class="cat-badges">{{badge.domain}}</div>
+                                <div class="desc-badges">{{badge.description}}</div>
+                                <div>{{( prog.value * 100) /((badge.endScore))}}%</div>
+                                <div class="prog-point">
+                                    <div class="first-number">{{badge.startScore}}</div>
+                                    <hr class="">
+
+                                    <progress-bar
+                                            :id="'rep'+badge.id"
+                                            class="cylinder-progress"
+                                            :stroke="defaultOptions.progress.color"
+                                            :stroke-width="progressWidth"
+                                            :animation="defaultOptions.progress.animation"
+                                            :options="defaultOptions"
+                                            :value=" (prog.value * 100)/((badge.endScore))"
+
+                                    />
+                                    <div class="last-number" v-bind:class="{'bg-red': bgBadges(badge)}" v-if="badge.endScore == 0">
+                                    </div>
+                                    <div class="last-number" v-else>{{badge.endScore}}</div>
+                                </div>
+                            </b-popover>
+
+                        </div>
+
+
+                        <div class="box" v-else-if="prog.value < badge.startScore"  >
+
+
+
+                            <b-img thumbnail fluid :id="'reputation'+badge.id" :src="`/rest/gamification/reputation/badge/${badge.title}/avatar`" alt="Thumbnail"  class="grey" width="200px" height="200px"   />
+
+                        </div>
+
+                        <div class="title-badge">{{badge.title}}</div>
+                        <b-popover :content="`${badge.description}`" :placement="'top'" :target="'reputation'+badge.id"
+                                   triggers="hover focus">
+                            <div class="level-badges">{{badge.level}}<br><span>Level</span>
+                            </div>
+                            <div class="title-badges">{{badge.title}}</div>
+                            <div class="cat-badges">{{badge.domain}}</div>
+                            <div class="desc-badges">{{badge.description}}</div>
+                            <div class="prog-point">
+                                <div class="first-number">{{badge.startScore}}</div>
+                                <hr class="interval">
+                                <div class="last-number" v-bind:class="{'bg-red': bgBadges(badge)}" v-if="badge.endScore == 0">
+                                </div>
+                                <div class="last-number" v-else>{{badge.endScore}}</div>
+                            </div>
+                        </b-popover>
                     </div>
 
 
 
-                <div class="container text-center no-reveal" :key="badge" v-for="badge in allbadges" v-if="badge.domain === 'Social'" >
-                    <div class="box">
-
-                        <div class="wave -one"></div> <div class="wave -two"></div><b-img thumbnail fluid :src="`/rest/gamification/reputation/badge/${badge.title}/avatar`" alt="Thumbnail"  class="m-1" width="200px" height="200px" />
 
 
+                </div>
+
+            </b-col>
+
+        </div>
+        <br>
+        <hr>
+        <div>
+            <h3> Knowledge Badges </h3>
+
+            <b-col md="12" class="text-center no-padding" :key="prog" v-for="prog in progs" v-if="prog.label=== 'Knowledge'">
+
+
+                <div class="protected content bg-indigo" >
+                    <div class="container text-center no-reveal" :key="badge" v-for="badge in badges" v-if="badge.zone === 'Knowledge' "   >
+
+                        <div class="box" v-if=" prog.value > badge.startScore    ">
+
+                            <b-img :id="'reputation'+badge.id" :src="badge.url" alt="Thumbnail" class="m-1" fluid height="200px"
+
+                                   thumbnail width="200px"/>
+
+                        </div>
+
+                        <div class="boxpercent" v-else-if="prog.value < badge.endScore " :id="'rep'+badge.id">
+
+                            <b-img thumbnail fluid :id="'reputation'+badge.id" :src="`/rest/gamification/reputation/badge/${badge.title}/avatar`" alt="Thumbnail"  class="greytwo" width="200px" height="200px"   />
+
+
+                            <progress-bar
+                                    :id="'rep'+badge.id"
+                                    class="cylinder-progress"
+                                    :stroke="defaultOptions.progress.color"
+                                    :stroke-width="progressWidth"
+                                    :animation="defaultOptions.progress.animation"
+                                    :options="defaultOptions"
+                                    :value=" (prog.value * 100)/((badge.endScore))"
+
+                            />
+                            <div class="title-badge">{{badge.title}}</div>
+                            <b-popover :content="`${badge.description}`" :placement="'top'" :target="'rep'+badge.id"
+                                       triggers="hover focus">
+                                <div class="level-badges">{{badge.level}}<br><span>Level</span>
+                                </div>
+                                <div class="title-badges">{{badge.title}}</div>
+                                <div class="cat-badges">{{badge.domain}}</div>
+                                <div class="desc-badges">{{badge.description}}</div>
+                                <div>{{( prog.value * 100) /((badge.endScore))}}%</div>
+                                <div class="prog-point">
+                                    <div class="first-number">{{badge.startScore}}</div>
+                                    <hr class="">
+
+                                    <progress-bar
+                                            :id="'rep'+badge.id"
+                                            class="cylinder-progress"
+                                            :stroke="defaultOptions.progress.color"
+                                            :stroke-width="progressWidth"
+                                            :animation="defaultOptions.progress.animation"
+                                            :options="defaultOptions"
+                                            :value=" (prog.value * 100)/((badge.endScore))"
+
+                                    />
+
+
+                                    <div class="last-number" v-bind:class="{'bg-red': bgBadges(badge)}" v-if="badge.endScore == 0">
+                                        {{badge.startScore}}
+                                    </div>
+                                    <div class="last-number" v-else>{{badge.endScore}}</div>
+                                </div>
+                            </b-popover>
+
+                        </div>
+
+
+
+
+                        <div class="box" v-else  >
+
+
+
+                            <b-img thumbnail fluid :id="'reputation'+badge.id" :src="`/rest/gamification/reputation/badge/${badge.title}/avatar`" alt="Thumbnail"  class="grey" width="200px" height="200px"   />
+
+                        </div>
+
+
+
+
+                        <div class="title-badge">{{badge.title}}</div>
+                        <b-popover :content="`${badge.description}`" :placement="'top'" :target="'reputation'+badge.id"
+                                   triggers="hover focus">
+                            <div class="level-badges">{{badge.level}}<br><span>Level</span>
+                            </div>
+                            <div class="title-badges">{{badge.title}}</div>
+                            <div class="cat-badges">{{badge.domain}}</div>
+                            <div class="desc-badges">{{badge.description}}</div>
+                            <div class="prog-point">
+                                <div class="first-number">{{badge.startScore}}</div>
+                                <hr class="interval">
+                                <div class="last-number" v-bind:class="{'bg-red': bgBadges(badge)}" v-if="badge.endScore == 0">
+                                    {{badge.startScore}}
+                                </div>
+                                <div class="last-number" v-else>{{badge.startScore}}
+                                </div>
+                            </div>
+                        </b-popover>
                     </div>
-                    <div class="title-badges">{{badge.title}}</div>
+
+
+
 
                 </div>
 
-                </div>
 
 
             </b-col>
 
         </div>
-        <div>
-<hr>
- <b-col md="12" class="text-center no-padding" v-for="badge in badges" :key="badge" v-if="badge.zone === 'Knowledge'">
-   <h4>knowledge Badges</h4>
-     <div class="protected content bg-indigo">
-         <div class="container text-center no-reveal">
-             <div class="box">
-                 <div class="wave -one"></div>
-        <b-img :id="'reputation'+badge.id" :src="badge.url" alt="Thumbnail" class="m-1" fluid height="200px"
-               thumbnail width="200px"/>
-
-             </div>
-         </div>
-
-     </div>
-                <div class="title-badges">{{badge.title}}</div>
-            <b-popover :content="`${badge.description}`" :placement="'top'" :target="'reputation'+badge.id"
-                       triggers="hover focus">
-                <div class="level-badges">
-                    {{badge.level}}<br><span>Level</span>
-                </div>
-                <div class="title-badges">{{badge.title}}</div>
-                <div class="cat-badges">{{badge.zone}}</div>
-                <div class="date-badges">{{badge.createdDate}}</div>
-                <div class="desc-badges">{{badge.description}}</div>
-                <div class="prog-point">
-                    <div class="first-number">{{badge.startScore}}</div>
-                    <hr class="interval">
-                    <div class="last-number" v-bind:class="{'bg-red': bgBadges(badge)}" v-if="badge.endScore == 0">
-                        ∞
-                    </div>
-                    <div class="last-number" v-else>{{badge.endScore}}</div>
-                </div>
-            </b-popover>
-    </b-col>
 
 
-        </div>
+
 
     </b-container>
 
 
 </template>
 <script>
-
     import Vue from 'vue'
     import BootstrapVue from 'bootstrap-vue'
     import { Popover } from 'bootstrap-vue/es/components';
     import { Image } from 'bootstrap-vue/es/components';
+    import ProgressBar from 'vuejs-progress-bar'
+    Vue.use(ProgressBar)
     import axios from 'axios';
-
     Vue.use(BootstrapVue);
     Vue.use(Popover);
     Vue.use(Image);
-
     const initialData = () => {
         return {
             badges: [],
-            allbadges: []
+            progs: [],
+            value: '',
+            defaultOptions: Object,
+
+
 
 
         }
     }
-
     export default {
         data: initialData,
-        methods: {
-            showBadgeDetail(badgeDTO) {
-                axios.get(`/rest/gamification/reputation/update`, badgeDTO)
-                    .then(response => {
 
+        computed: {
+            cylinder () {
+                return this.defaultOptions.layout.type === 'cylinder'
+            },
+            line () {
+                return this.defaultOptions.layout.type === 'line'
+            },
+            width () {
+                return this.defaultOptions.layout.width
+            },
+            height () {
+                return this.defaultOptions.layout.height
+            },
+
+            striped: true,
+            animate: true
+
+        },
+        methods: {
+
+            showBadgeDetail(badgeDTO) {
+                axios.get(`/rest/gamification/update`, badgeDTO)
+                    .then(response => {
                     })
                     .catch(e => {
                         this.errors.push(e)
                     })
             },
+
             bgBadges: function (badge) {
+                return badge.endScore == 0 ;
+            },
 
-                return badge.endScore == 0;
+            mergeDefaultOptionsWithProp: function (options) {
+                var result = this.defaultOptions
+                for (var option in options)
+                {
+                    if (options[option] !== null && typeof(options[option]) === 'object') {
+                        for (var subOption in options[option]) {
+                            if (options[option][subOption] !== undefined && options[option][subOption] !== null) {
+                                result[option][subOption] = options[option][subOption]
+                            }
+                        }
+                    } else {
+                        result[option] = options[option]
+                    }
+                }
+            },
+            updateValue (val) {
+                let invertedVal = 100 - val;
+                if (this.cylinder) {
+                    this.rectHeight = (80 - (invertedVal*.8));
+                    this.rectY = (invertedVal*.8)+20;
+                    this.topCy = ((-invertedVal*-.8)+20);
+                    this.cylText =  (100-(invertedVal)+"%");
+                } else if (this.circle) {
+                    this.strokeCircle = 2 * Math.PI * this.radiusCircle
+                    this.strokeCircleOffset = this.strokeCircle * ((100-val)/100)
+                }
+            },
+            LightenColor: function (color, level) {
+                var usePound = false;
+                if (color[0] == "#") {
+                    color = color.slice(1);
+                    usePound = true;
+                }
 
-            }
+            var num = parseInt(color,16);
+    var r = (num >> 16) + level;
 
+    if (r > 255) r = 255;
+    else if  (r < 0) r = 0;
 
+    var b = ((num >> 8) & 0x00FF) + level;
+
+    if (b > 255) b = 255;
+    else if  (b < 0) b = 0;
+
+    var g = (num & 0x0000FF) + level;
+
+    if (g > 255) g = 255;
+    else if (g < 0) g = 0;
+
+    return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+
+    }
         },
-
-
+        props: {
+            options: {
+                type: Object,
+                required: false
+            },
+            value: {
+                type: Number,
+                required: false,
+                default: 0
+            }
+        },
         created() {
+
+
             var url = window.location.pathname
             console.log(url)
-            axios.get(`/rest/gamification/reputation/badges`, { params: {  } })
+            axios.get(`/rest/gamification/reputation/AllofBadges`, { params: {  } })
                 .then(response => {
-
                     this.badges = response.data;
-                });
-              axios.get(`/rest/gamification/reputation/try`)
-                .then(response => {
 
-                    this.allbadges = response.data;
                 })
+
+            axios.get(`/rest/gamification/reputation/stats`)
+                .then(response => {
+                    this.progs = response.data;
+                })
+
                 .catch(e => {
                     this.errors.push(e)
                 })
+
+
+
+            this.defaultOptions = {
+                text: {
+                    color: '#FFFFFF',
+                    shadowEnable: true,
+                    shadowColor: '#000000',
+                    fontSize: 14,
+                    fontFamily: 'Helvetica',
+                    dynamicPosition: false,
+                    hideText: false
+                },
+                progress: {
+                    color: '#2dbd2d',
+                    animation: 'drift 2s infinite linear',
+                    backgroundColor: '#C0C0C0',
+                },
+                layout: {
+                    height: 90,
+                    width: 90,
+                    verticalTextAlign: 61,
+                    horizontalTextAlign: 43,
+                    zeroOffset: 0,
+                    strokeWidth: 100,
+                    progressPadding: 0,
+                    type: 'line'
+                }}
+
+
+
+
+
         }
     }
 </script>
 
-<style scoped>
+<style>
     @font-face {
         font-family: 'open_sanssemibold';
         src: url('/gamification-portlets/skin/fonts/opensans-semibold-webfont.woff2') format('woff2'),
         url('/gamification-portlets/skin/fonts/opensans-semibold-webfont.woff') format('woff');
         font-weight: normal;
         font-style: normal;
-
     }
-
     @font-face {
         font-family: 'open_sansbold';
         src: url('/gamification-portlets/skin/fonts/opensans-bold-webfont.woff2') format('woff2'),
         url('/gamification-portlets/skin/fonts/opensans-bold-webfont.woff') format('woff');
         font-weight: normal;
         font-style: normal;
-
     }
-
     @font-face {
         font-family: 'open_sansregular';
         src: url('/gamification-portlets/skin/fonts/opensans-regular-webfont.woff2') format('woff2'),
         url('/gamification-portlets/skin/fonts/opensans-regular-webfont.woff') format('woff');
         font-weight: normal;
         font-style: normal;
-
     }
-
     #user-reputation-portlet .img-thumbnail {
         border-radius: 50%;
         height: 60px;
+        text-indent: -99999px;
+    }
+
+    m-1 img-thumbnail img-fluid:hover {
+        background-position: 0 0;
     }
 
     #reputation-badge-container {
         padding-right: 10px !important;
         padding-left: 10px !important;
+        text-align: center;
     }
+    options{
 
+        color: dimgray;
+        shadowEnable: true;
+        shadowColor: '#000000';
+        fontSize: 14;
+        fontFamily: 'Helvetica';
+        dynamicPosition: false;
+        hideText: false;
+    }
+    .grey{
+        filter: grayscale(100%) contrast(19%);
+        webkit-filter: grayscale(100%) contrast(19%);
+    }
+    .greytwo{
+        filter: contrast(19%);
+        webkit-filter:contrast(19%);
+    }
     .title-badges {
         color: #333333;
         font-family: 'open_sanssemibold';
@@ -188,27 +468,23 @@
         font-weight: bold;
         padding: 5px 0px;
     }
-
     .cat-badges {
         font-family: 'open_sansregular';
         color: #333333;
         font-size: 11px;
     }
-
     .date-badges {
         font-family: 'open_sansregular';
         color: #333333;
         font-size: 11px;
         padding-bottom: 5px;
     }
-
     .desc-badges {
         padding: 0px 15px;
         font-family: 'open_sansregular';
         color: #333333;
         padding-bottom: 12px;
     }
-
     .level-badges {
         background: #4f6998;
         padding: 14px 14px 6px;
@@ -221,13 +497,11 @@
         border-radius: 50%;
         font-family: 'open_sansbold';
     }
-
     .level-badges span {
         font-size: 9px;
         font-weight: normal;
         font-family: 'open_sansregular';
     }
-
     .prog-point {
         background: #f0f8fe;
         min-height: 46px;
@@ -237,7 +511,6 @@
         top: 2px;
         position: relative;
     }
-
     .first-number {
         padding-top: 4px;
         border-radius: 50%;
@@ -255,7 +528,6 @@
         line-height: 27px;
         text-align: center;
     }
-
     .last-number {
         font-size: 14px;
         float: left;
@@ -275,7 +547,25 @@
         position: relative;
         padding: 1px;
     }
-
+    .current-number {
+        font-size: 14px;
+        float: left;
+        background: #60a352;
+        color: #fff;
+        font-family: 'open_sansregular';
+        border-radius: 50%;
+        position: relative;
+        z-index: 10;
+        border: 3px solid #c7e5c8;
+        float: right;
+        width: 40px;
+        height: 40px;
+        top: -2px;
+        line-height: 35px;
+        text-align: center;
+        position: relative;
+        padding: 1px;
+    }
     .bg-red {
         background: #fd7e14;
         border: none;
@@ -284,7 +574,6 @@
         font-size: 20px;
         top: 1px;
     }
-
     .interval {
         height: 2px;
         background: #60a352;
@@ -297,9 +586,7 @@
     img#reputation {
         padding: 10px;
     }
-
     @media (min-width: 768px) {
-
         .col-md-4 {
             -ms-flex: 0 0 33.333333%;
             flex: 0 0 33.333333%;
@@ -307,7 +594,7 @@
             float: left;
         }
     }
-/*new*/
+    /*new*/
     body
     {
         margin:0;
@@ -315,13 +602,12 @@
         background: #00F260;  /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #0575E6, #00F260);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #0575E6, #00F260); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
     }
 
     .protected .box {
         width: 90px;
         height: 90px;
-        margin: 180px auto 20px;
+        margin: 60px auto 20px;
         border-radius: 100%;
         border: 4px solid white;
         background: white;
@@ -330,28 +616,26 @@
         position: relative;
         overflow: hidden;
         transform: translateZ(0); }
+    .protected .boxpercent {
+        width: 90px;
+        height: 90px;
+        margin: 60px auto 20px;
+        border-radius: 100%;
+        border: 4px solid white;
+        background: white;
+        box-shadow: 0 2px 150px rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+        transform: translateZ(0);
+    }
 
-    .protected .wave {
-        opacity: 0.4;
-        position: absolute;
-        top: 3%;
-        left: 50%;
-        background: rgba(15, 16, 35, 0.56);
-        width: 200px;
-        height: 200px;
-        margin-left: -100px;
-        margin-top: -155px;
-        transform-origin: 50% 48%;
-        border-radius: 43%;
-        animation: drift 2.5s infinite linear; }
 
-    .protected .wave.-three {
-        animation: drift 5s infinite linear; }
+line{
+    margin-top: -2px;
+}
 
-    .protected .wave.-two {
-        animation: drift 9s infinite linear;
-        opacity: 1;
-        background: #230f1982; }
+
+
 
     .protected .box:after {
         content: '';
@@ -361,8 +645,18 @@
         width: 100%;
         height: 100%;
         z-index: 11;
-        transform: translate3d(0, 0, 0); }
-
+        transform: translate3d(0, 0, 0);
+    }
+    .protected .boxpercent:after {
+        content: '';
+        display: block;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 11;
+        transform: translate3d(0, 0, 0);
+    }
     .protected .title {
         position: absolute;
         left: 0;
@@ -379,13 +673,89 @@
         font-size: 24px;
         text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
         text-indent: 0.3em; }
-
     @keyframes drift {
         from {
             transform: rotate(0deg); }
         from {
             transform: rotate(360deg); }
     }
+    .protected.content.bg-indigo {
+        display: flex;
+    }
+    @media (max-width: 767px) {
+        .protected.content.bg-indigo {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
 
 
-</style>
+
+        .progress-bar {
+        display: inline-block;
+        align-content: stretch;
+        color: rgba(15, 16, 35, 0.56);
+
+        height: 89px !important;
+        width: 90px !important;
+        transform: rotate(-90deg);
+            margin-top: -99px;
+
+
+
+    }
+    .progress{
+        animation: drift 2.5s infinite linear;
+    }
+
+    .progress-container {
+        stroke-width: 2px;}
+    .top {
+        z-index: 2;
+    }
+
+    .progress-content {
+        stroke-width: 2px;
+
+    }
+    .top {
+        z-index:1;
+    }
+
+
+    #wave {
+        position: relative;
+        height: 70px;
+        width: 600px;
+        background: #e0efe3;
+    }
+
+    line:nth-child(1)  {
+      display:none;
+
+    }
+  text:nth-child(3)  {
+      visibility: hidden;
+  }
+
+
+   
+    line:nth-child(2):after {
+        content: "";
+        display: block;
+        position: absolute;
+        border-radius: 100% 50%;
+        width: 300px;
+        height: 70px;
+        background-color: #e0efe3;
+        left: 0;
+        top: 27px;
+
+    }
+
+    svg#line-progress {
+        margin-top: 15px;
+        transform: translateY(-20px);
+    }
+
+      </style>
