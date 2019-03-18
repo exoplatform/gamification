@@ -1,61 +1,48 @@
 <template class="">
 
-    <div class="uiBox container-fluid">
 
-        <div class="row">
-            <div class="col md2">
-                <select v-model="domain" class="custom-select">
-                    <option :value="null"loadCapacity=10>All times</option>
-                    <option value ="WEEK"loadCapacity=10>Week</option>
-                    <option value ="MONTH"loadCapacity=10>Month</option>
-                </select>
-            </div>
+ <table class="uiGrid table table-hover table-striped rule-table" hover striped>
+
+        <thead>
+        <tr>
+            <th class="rule-name-col"></th>
+            <th class="rule-name-col">Event</th>
+            <th class="rule-desc-col">Date</th>
+            <th class="rule-price-col"> Points <a class="ico-info actionIco" data-v-2e935f06="" href="../gamification-earn-points" target="_blank" rel="tooltip"
+                                                  data-original-title="How can I earn points ?" >
+                <i data-v-2e935f06="" class="uiIconInformation"></i></a></th>
+            <th class="rule-enable-col">Domain</th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        <tr :key="user.receiver" v-for="(user, index) in users">
+
+
+
+            <td>  <div class="desc-user">
+                <a :href="user.profileUrl"><avatar :size="35" :src="user.avatarUrl"></avatar></a>
+            </div></td>
+            <td :key="rule.id" v-for="rule in rules" v-if=" rule.title === user.actionTitle">
+                <a v-bind:href="user.objectId" >{{ rule.description}} </a> </td>
+            <td>{{user.createdDate}}</td>
+            <td>{{user.actionScore}}</td>
+            <td>{{user.domain}}</td>
+
+        </tr>
+
+
+
+
+        </tbody>
+
+        <div id="ActivitiesLoader" v-if="users.length>1" class="btn btn-block">
+            <b-link @click.prevent="showMore()" href="#">Load More</b-link>
         </div>
+    </table>
 
 
-
-        <table class="uiGrid table table-hover table-striped rule-table" hover striped>
-
-            <thead>
-            <tr>
-                <th class="rule-name-col"></th>
-                <th class="rule-name-col">Event</th>
-                <th class="rule-desc-col">Date</th>
-                <th class="rule-price-col"> Points <a class="ico-info actionIco" data-v-2e935f06="" href="../gamification-earn-points" target="_blank" rel="tooltip"
-                                                      data-original-title="How can I earn points ?" >
-                    <i data-v-2e935f06="" class="uiIconInformation"></i></a></th>
-                <th class="rule-enable-col">Domain</th>
-            </tr>
-            </thead>
-            <tbody>
-
-
-            <tr :key="user.receiver" v-for="(user, index) in users">
-
-
-
-                <td>  <div class="desc-user">
-                    <a :href="user.profileUrl"><avatar :size="35" :src="user.avatarUrl"></avatar></a>
-                </div></td>
-                <td :key="rule.id" v-for="rule in rules" v-if=" rule.title === user.actionTitle">
-                    <a v-bind:href="user.objectId" >{{ rule.description}} </a> </td>
-                <td>{{user.createdDate}}</td>
-                <td>{{user.actionScore}}</td>
-                <td>{{user.domain}}</td>
-
-            </tr>
-
-
-
-
-            </tbody>
-
-            <div id="ActivitiesLoader" v-if="users.length>1" class="btn btn-block">
-                <b-link @click.prevent="showMore()" href="#">Load More</b-link>
-            </div>
-        </table>
-
-    </div>
 </template>
 
 <script>
@@ -132,9 +119,10 @@
 
             },
             showMore() {
+                var url = window.location.pathname
                 let self = this;
                 self.loadCapacity += 10;
-                axios.get(`/rest/gamification/gameficationinformationsboard/history/all`, { params: { 'domain': self.domain, 'period': self.selectedPeriod, 'capacity': self.loadCapacity} })
+                axios.get(`/rest/gamification/gameficationinformationsboard/history/all`, { params: { 'domain': self.domain, 'period': self.selectedPeriod, 'capacity': self.loadCapacity,'url': url} })
                     .then(response => {
                         this.users = response.data;
                     })
@@ -169,7 +157,8 @@
             },
         },
         created() {
-            axios.get(`/rest/gamification/gameficationinformationsboard/history/all`)
+            var url = window.location.pathname
+            axios.get(`/rest/gamification/gameficationinformationsboard/history/all`, { params: { 'url': url } })
                 .then(response => {
                     this.users = response.data;
                 });
@@ -186,16 +175,16 @@
 
 
 <style scoped>
-
-    .uiGrid.table tr td {
+ .uiGrid.table tr td {
         padding: 5px 0px;
         text-align: center;
     }
-    .uiGrid.table.table-hover.table-striped.rule-table {
+  .uiGrid.table.table-hover.table-striped.rule-table {
         margin: auto;
         width: 99%;
     }
-    .uiBox {
+.uiBox {
+
         background: transparent;
     }
     .user-GamificationInformations-portlet .uiIconViewByChart {
@@ -254,6 +243,7 @@
     .show>.btn-secondary.dropdown-toggle:focus {
         box-shadow: none;
     }
+
     .show>.btn-secondary.dropdown-toggle {
         background-color: #578dc9;
         border: solid 1px #578dc9;
@@ -310,6 +300,7 @@
     .actionIco {
         border: 1px solid transparent;
     }
+
     .uiGrid.table tr th {
         font-weight: bold;
         padding: 10px 10px;
@@ -320,6 +311,7 @@
         width: 35px !important;
         margin: auto;
     }
+
     @media (max-width: 769px) {
         .uiGrid.table tr td {
             border: transparent;
@@ -334,65 +326,63 @@
             /* text-align: center; */
             display: inline-flex;
         }
-        .uiGrid.table td:nth-child(2) {
-            width: 70%;
-            padding: initial;
-        }
-        .uiGrid.table td:nth-child(3) {
-            margin-left: 3.2em;
-            font-size: 0.9em;
-            line-height: initial;
-            margin-right: -2em;
-        }
-        .uiGrid.table td:nth-child(4) {
-            float: right;
-            position: initial;
-            transform: translateY(-60%);
-            margin-right: 1em;
-            font-weight: bold;
-            color: #666;
-        }
+
+       .uiGrid.table td:nth-child(2) {
+           width: 70%;
+           padding: initial;
+       }
+       .uiGrid.table td:nth-child(3) {
+           margin-left: 3em;
+           margin-right: 1em;
+       }
+       .uiGrid.table td:nth-child(4) {
+           float: right;
+           position: initial;
+           transform: translateY(-60%);
+           margin-right: 1em;
+           font-weight: bold;
+           color: #666;
+       }
         .uiGrid.table td:nth-child(1) {
-            transform: translateY(35%);
+           transform: translateY(35%);
+       }
+
+}
+
+ @media (max-width: 434px) {
+       .uiGrid.table td:nth-child(2) {
+           width: 55%;
+           padding: initial;
+       }
+
+
+       /*second vertion*/
+       /*
+       .uiGrid.table tr td:nth-child(1) {
+           display: table-cell;
+       }
+        .uiGrid.table tr td{
+        display: flex;
         }
-    }
-    @media (min-width:1189px) {
-        .col.md2 {
-            position: absolute;
-            margin-top: -90px;
-            transform: translateX(-50%);
-            margin-left: 57%;
-        } }
+        */
+      }
+ @media (min-width:1189px) {
+     .col.md2 {
+         position: absolute;
+         margin-top: -90px;
+         transform: translateX(-50%);
+         margin-left: 57%;
+     } }
 
-    @media (max-width:1188px) {
-
-
-        .col.md2 {
-            position: absolute;
-            margin-top: -90px;
-            transform: translateX(-50%);
-            margin-left: 51%;
-        }}
+ @media (max-width:1188px) {
 
 
-
-
-.custom-select {
-
-        border: none;
-        width: auto;
-        font-size: 17px;
-        color: #2c67bb;
-        outline: none;
-
-    }
-    @media (max-width:780px) {
-        select.custom-select {
-            margin-top: 67px;
-        }
-
-    }
-
+     .col.md2 {
+         position: absolute;
+         margin-top: -90px;
+         transform: translateX(-50%);
+         margin-left: 51%;
+     }}
 
 
 </style>
