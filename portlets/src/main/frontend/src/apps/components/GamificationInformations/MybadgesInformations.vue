@@ -16,6 +16,7 @@
                         <div class="box" v-if=" prog.value > badge.startScore">
 
 
+
                             <b-img :id="'reputation'+badge.id" :src="badge.url" alt="Thumbnail" class="m-1" fluid height="200px"
 
                                    thumbnail width="200px"/>
@@ -111,6 +112,7 @@
         <br>
         <hr>
         <div>
+
             <h3> Knowledge Badges </h3>
 
             <b-col md="12" class="text-center no-padding" :key="prog" v-for="prog in progs" v-if="prog.label=== 'Knowledge'">
@@ -208,6 +210,7 @@
                                 </div>
                             </div>
                         </b-popover>
+
                     </div>
 
 
@@ -453,6 +456,7 @@
     .greytwo{
         filter: contrast(19%);
         webkit-filter:contrast(19%);
+
     }
     .title-badges {
         color: #333333;
@@ -685,6 +689,7 @@
         from {
             transform: rotate(360deg); }
     }
+
     .protected.content.bg-indigo {
         display: flex;
     }
@@ -841,6 +846,7 @@
 
 
     }
+
 
 
 </style>

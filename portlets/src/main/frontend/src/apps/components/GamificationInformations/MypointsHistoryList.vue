@@ -1,5 +1,7 @@
 <template class="">
 
+<div class="total">
+     <total-points-filter></total-points-filter>
 
  <table class="uiGrid table table-hover table-striped rule-table" hover striped>
 
@@ -21,9 +23,9 @@
 
 
 
-            <td>  <div class="desc-user">
-                <a :href="user.profileUrl"><avatar :size="35" :src="user.avatarUrl"></avatar></a>
-            </div></td>
+           <td>  <div class="desc-user">
+                           <a :href="user.profileUrl"> <avatar :username="user.fullname" :size="35" :src="user.avatarUrl"></avatar></a>
+                       </div></td>
             <td :key="rule.id" v-for="rule in rules" v-if=" rule.title === user.actionTitle">
                 <a v-bind:href="user.objectId" >{{ rule.description}} </a> </td>
             <td>{{user.createdDate}}</td>
@@ -42,6 +44,7 @@
         </div>
     </table>
 
+</div>
 
 </template>
 
@@ -53,6 +56,7 @@
     import axios from 'axios';
     import Avatar from 'vue-avatar'
     import TotalPointsFilter from "./TotalPointsFilter";
+
     Vue.use(BootstrapVue);
     Vue.use(Popover);
     Vue.use(Image);
@@ -347,6 +351,7 @@
            transform: translateY(35%);
        }
 
+
 }
 
  @media (max-width: 434px) {
@@ -383,6 +388,7 @@
          transform: translateX(-50%);
          margin-left: 51%;
      }}
+
 
 
 </style>
