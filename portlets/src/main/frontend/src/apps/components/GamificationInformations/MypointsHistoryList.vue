@@ -1,7 +1,5 @@
 <template class="">
 
-<div class="total">
-     <total-points-filter></total-points-filter>
 
  <table class="uiGrid table table-hover table-striped rule-table" hover striped>
 
@@ -44,7 +42,6 @@
         </div>
     </table>
 
-</div>
 
 </template>
 
@@ -55,6 +52,7 @@
     import { Image } from 'bootstrap-vue/es/components';
     import axios from 'axios';
     import Avatar from 'vue-avatar'
+    import TotalPointsFilter from "./TotalPointsFilter";
     Vue.use(BootstrapVue);
     Vue.use(Popover);
     Vue.use(Image);
@@ -121,9 +119,10 @@
 
             },
             showMore() {
+                var url = window.location.pathname
                 let self = this;
                 self.loadCapacity += 10;
-                axios.get(`/rest/gamification/gameficationinformationsboard/history/all`, { params: { 'capacity': self.loadCapacity} })
+                axios.get(`/rest/gamification/gameficationinformationsboard/history/all`, { params: { 'domain': self.domain, 'period': self.selectedPeriod, 'capacity': self.loadCapacity,'url': url} })
                     .then(response => {
                         this.users = response.data;
                     })
@@ -158,7 +157,8 @@
             },
         },
         created() {
-            axios.get(`/rest/gamification/gameficationinformationsboard/history/all`)
+            var url = window.location.pathname
+            axios.get(`/rest/gamification/gameficationinformationsboard/history/all`, { params: { 'url': url } })
                 .then(response => {
                     this.users = response.data;
                 });
