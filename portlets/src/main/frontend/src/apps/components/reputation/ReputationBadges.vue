@@ -51,7 +51,7 @@
         data: initialData,
         methods: {
             showBadgeDetail(badgeDTO) {
-                axios.get(`/rest/gamification/reputation/`, badgeDTO)
+                axios.get(`/rest/gamification/reputation/update`, badgeDTO)
                     .then(response => {
 
                     })
