@@ -100,17 +100,10 @@
             },
         },
         created() {
-            if ((!eXo && eXo.env) || !eXo.env.portal || !eXo.env.portal.userName || !eXo.env.portal.userName.length) {
-                this.isGamificationEnabled = false;
-                return;
-            }
-            if (eXo.env.portal.profileOwner && eXo.env.portal.profileOwner !== eXo.env.portal.userName) {
-                this.isGamificationEnabled = false;
-                return;
-            } else {
+
                 this.isGamificationEnabled = true;
                 this.initMenuApp();
-            }
+
 
         }
 
