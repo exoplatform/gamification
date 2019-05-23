@@ -7,7 +7,7 @@ import org.exoplatform.addons.gamification.entities.domain.configuration.RuleEnt
 import java.io.Serializable;
 import java.util.Date;
 
-public class RuleDTO implements Serializable {
+public class DomainDTO implements Serializable {
 
 
     protected Long id;
@@ -15,15 +15,6 @@ public class RuleDTO implements Serializable {
     protected String title;
 
     protected String description;
-
-    protected int score;
-
-    protected String area;
-
-    private DomainDTO domainDTO;
-
-    //protected boolean isEnabled;
-    protected boolean enabled;
 
     private String createdBy;
 
@@ -33,23 +24,20 @@ public class RuleDTO implements Serializable {
 
     private Date lastModifiedDate;
 
-    public RuleDTO() {
+
+
+    public DomainDTO() {
 
     }
 
-    public RuleDTO(RuleEntity rule) {
-        this.id = rule.getId();
-        this.title = rule.getTitle();
-        this.description = rule.getDescription();
-        this.score = rule.getScore();
-        this.area = rule.getArea();
-        this.domainDTO = new DomainDTO(rule.getDomainEntity());
-        this.enabled = rule.isEnabled();
-        this.createdBy = rule.getCreatedBy();
-        this.createdDate = rule.getCreatedDate();
-        this.lastModifiedBy = rule.getLastModifiedBy();
-        this.lastModifiedDate = rule.getLastModifiedDate();
-
+    public DomainDTO(DomainEntity domainEntity) {
+        this.id = domainEntity.getId();
+        this.title = domainEntity.getTitle();
+        this.description = domainEntity.getDescription();
+        this.createdBy = domainEntity.getCreatedBy();
+        this.createdDate = domainEntity.getCreatedDate();
+        this.lastModifiedBy = domainEntity.getLastModifiedBy();
+        this.lastModifiedDate = domainEntity.getLastModifiedDate();
     }
 
     public Long getId() {
@@ -74,38 +62,6 @@ public class RuleDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public DomainDTO getDomainDTO() {
-        return domainDTO;
-    }
-
-    public void setDomainDTO(DomainDTO domainDTO) {
-        this.domainDTO = domainDTO;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     public String getCreatedBy() {
@@ -148,8 +104,6 @@ public class RuleDTO implements Serializable {
         return "RuleDTO{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", score='" + score + '\'' +
-                ", area='" + area + '\'' +
                 ", createdBy=" + createdBy +
                 ", createdDate=" + createdDate +
                 ", lastModifiedBy='" + lastModifiedBy + '\'' +

@@ -67,6 +67,18 @@ public class RuleDAO extends GenericDAOJPAImpl<RuleEntity, Long> implements Gene
 
     }
 
+
+    public List<String>  getDomainList() throws PersistenceException {
+        TypedQuery<String> query = getEntityManager().createNamedQuery("Rule.getDomainList", String.class);
+
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+
+    }
+
     public void clear() {
         getEntityManager().clear();
     }

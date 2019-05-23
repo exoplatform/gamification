@@ -4,6 +4,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.exoplatform.addons.gamification.service.effective.GamificationService;
 import org.exoplatform.addons.gamification.service.effective.StandardLeaderboard;
+import org.exoplatform.addons.gamification.storage.dao.RuleDAO;
+import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
@@ -134,6 +136,32 @@ public class GamificationRestEndpoint implements ResourceContainer {
         } finally {
 
         }
+
+    }
+
+    /**
+     * Return all domains
+     *
+     * @return : list of all domains
+     */
+    @Path("domains")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("users")
+    public Response getAllDomains() {
+
+        try {
+            RuleDAO ruleDAO = CommonsUtils.getService(RuleDAO.class);
+
+            return Response.ok(ruleDAO.getDomainList()).build();
+
+        } catch (Exception e) {
+            LOG.error("Error while fetching All Domains", e);
+            return Response.ok("Error while fetching all earned points").build();
+        } finally {
+
+        }
+
     }
 
     public static class GamificationPoints {

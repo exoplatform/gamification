@@ -87,6 +87,10 @@ public class BadgeEntity extends AbstractAuditingEntity implements Serializable 
     @Column(name = "DOMAIN", nullable = false)
     protected String domain;
 
+    @ManyToOne
+    @JoinColumn(name = "DOMAIN_ID")
+    private DomainEntity domainEntity;
+
     public BadgeEntity() {
     }
 
@@ -161,6 +165,16 @@ public class BadgeEntity extends AbstractAuditingEntity implements Serializable 
     public void setIconFileId(long iconFileId) {
         this.iconFileId = iconFileId;
     }
+
+
+    public DomainEntity getDomainEntity() {
+        return domainEntity;
+    }
+
+    public void setDomainEntity(DomainEntity domainEntity) {
+        this.domainEntity = domainEntity;
+    }
+
 
     @Override
     public boolean equals(Object o) {
