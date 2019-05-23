@@ -9,6 +9,8 @@ import org.exoplatform.commons.utils.CommonsUtils;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class RuleService {
@@ -29,7 +31,7 @@ public class RuleService {
      * @return an instance of RuleDTO
      */
     @ExoTransactional
-    public RuleDTO findEnableRuleByTitle (String ruleTitle) {
+    public RuleDTO findEnableRuleByTitle (String ruleTitle) throws EntityNotFoundException {
 
         try {
             //--- Get Entity from DB
@@ -37,6 +39,8 @@ public class RuleService {
             //--- Convert Entity to DTO
             if (entity != null ) {
                 return ruleMapper.ruleToRuleDTO(entity);
+            }else{
+                throw (new EntityNotFoundException());
             }
 
         } catch (Exception e) {
@@ -52,7 +56,7 @@ public class RuleService {
      * @return an instance of RuleDTO
      */
     @ExoTransactional
-    public RuleDTO findRuleByTitle (String ruleTitle) {
+    public RuleDTO findRuleByTitle (String ruleTitle) throws EntityNotFoundException {
 
         try {
             //--- Get Entity from DB
@@ -60,38 +64,97 @@ public class RuleService {
             //--- Convert Entity to DTO
             if (entity != null ) {
                 return ruleMapper.ruleToRuleDTO(entity);
+            }else{
+                throw (new EntityNotFoundException());
             }
 
         } catch (Exception e) {
             LOG.error("Error to find Rule entity with title : {}",ruleTitle,e.getMessage());
+            throw(e);
         }
-        return null;
-
     }
 
-    public List<RuleDTO> getAllRules() {
+
+
+    /**
+     * Get all Rules from DB
+     * @return RuleDTO list
+     */
+
+    public List<RuleDTO> getAllRules() throws NoResultException {
         try {
             //--- load all Rules
             List<RuleEntity> rules =  ruleDAO.getAllRules();
             if (rules != null) {
                 return ruleMapper.rulesToRoleDTOs(rules);
+            }else{
+                throw (new NoResultException());
             }
 
         } catch (Exception e) {
             LOG.error("Error to find Rules",e.getMessage());
+            throw(e);
         }
-        return null;
+    }
+    /**
+     * Get all Rules by Domain from DB
+     * * @param domain : rule's domain param
+     * @return RuleDTO list
+     */
+    @ExoTransactional
+    public List<RuleDTO> getAllRulesByDomain(String domain)  throws NoResultException{
+        try {
+            //--- load all Rules by Domain
+            List<RuleEntity> rules =  ruleDAO.getAllRulesByDomain(domain);
+            if (rules != null) {
+                return ruleMapper.rulesToRoleDTOs(rules);
+            }else{
+                throw (new NoResultException());
+            }
+        } catch (Exception e) {
+            LOG.error("Error to find Rules",e.getMessage());
+            throw(e);
+        }
+    }
+
+    /**
+     * Get all Rules by with null DomainDTO from DB
+     * @return RuleDTO list
+     */
+    @ExoTransactional
+    public List<RuleDTO> getAllRulesWithNullDomain()  throws NoResultException{
+        try {
+            List<RuleEntity> rules =  ruleDAO.getAllRulesWithNullDomain();
+            if (rules != null) {
+                return ruleMapper.rulesToRoleDTOs(rules);
+            }else{
+                throw (new NoResultException());
+            }
+
+        } catch (Exception e) {
+            LOG.error("Error to find Rules",e.getMessage());
+            throw(e);
+        }
+    }
+
+
+    /**
+     * Get all Domains from Rules from DB
+     * @return String list
+     */
+    @ExoTransactional
+    public List<String> getDomainListFromRules() {
+        return ruleDAO.getDomainList();
     }
 
     @ExoTransactional
-    public void deleteRule (String ruleTitle) {
+    public void deleteRule (String ruleTitle)  throws Exception{
 
         try {
-
             ruleDAO.deleteRuleByTitle(ruleTitle);
-
         } catch (Exception e) {
             LOG.error("Error to delete rule with title {}", ruleTitle, e);
+            throw(e);
         }
     }
 
@@ -101,7 +164,7 @@ public class RuleService {
      * @return RuleDTO object
      */
     @ExoTransactional
-    public RuleDTO addRule (RuleDTO ruleDTO) {
+    public RuleDTO addRule (RuleDTO ruleDTO)  throws Exception{
 
         RuleEntity ruleEntity = null;
 
@@ -111,6 +174,7 @@ public class RuleService {
 
         } catch (Exception e) {
             LOG.error("Error to delete rule with title {}", ruleDTO.getTitle() , e);
+            throw(e);
         }
 
         return ruleMapper.ruleToRuleDTO(ruleEntity);
@@ -122,7 +186,7 @@ public class RuleService {
      * @return RuleDTO object
      */
     @ExoTransactional
-    public RuleDTO updateRule (RuleDTO ruleDTO) {
+    public RuleDTO updateRule (RuleDTO ruleDTO) throws Exception{
 
         RuleEntity ruleEntity = null;
 
@@ -132,6 +196,7 @@ public class RuleService {
 
         } catch (Exception e) {
             LOG.error("Error to update rule with title {}", ruleDTO.getTitle() , e);
+            throw(e);
         }
 
         return ruleMapper.ruleToRuleDTO(ruleEntity);
