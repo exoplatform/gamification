@@ -302,7 +302,7 @@ export default {
         color: #fff;
         text-align: center;
         font-size: 26px;
-        font-family: myriad pro;
+        font-family: myriad pro, sans-serif;
         padding: 15px 0px;
         font-weight: normal;
         margin: 0;
@@ -366,7 +366,7 @@ export default {
         background: #476a9c;
         color: #f0f0f0;
         border-radius: 20px;
-        padding: 5px 10px;
+        padding: 6px 10px;
         margin: auto 10px;
     }
     #uiHowEarnPoint .tab {
@@ -387,6 +387,7 @@ export default {
         margin-bottom: 0px;
         transition: none;
         float:left;
+        outline: none;
     }
     #uiHowEarnPoint #Team button.btn.btn-link.collapsed {
         margin-bottom: 70px;
@@ -411,12 +412,6 @@ export default {
         float:left;
         display: block;
     }
-
-
-
-
-
-
     #uiHowEarnPoint button.btn.btn-link.collapsed::after {
         display: inline-block;
         width: 0;
