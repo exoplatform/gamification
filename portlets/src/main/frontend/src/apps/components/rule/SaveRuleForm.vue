@@ -69,19 +69,25 @@
 
                                     </div>
 
-                                    <form id="areaSelectboxGroup">
-                                        <select v-model="rule.area" class="mb-4">
-                                            <template slot="first">
+                        <form id="areaSelectboxGroup">
+<!--                            <select v-model="rule.area" class="mb-4">
+                                <template slot="first">
 
-                                                <option :value="null" disabled>-- Please select an area --</option>
-                                            </template>
+                                    <option :value="null" disabled>&#45;&#45; Please select an area &#45;&#45;</option>
+                                </template>
 
-                                            <option value="Social">Social</option>
-                                            <option value="Knowledge">Knowledge</option>
-                                            <option value="Teamwork">Teamwork</option>
-                                            <option value="Feedback">Feedback</option>
-                                        </select>
-                                    </form>
+                                <option value="Social">Social</option>
+                                <option value="Knowledge">Knowledge</option>
+                                <option value="Teamwork">Teamwork</option>
+                                <option value="Feedback">Feedback</option>
+                            </select>-->
+                            <select v-model="rule.domainDTO" class="mb-4">
+                                <option :value="null" disabled>-- Please select an area --</option>
+                                <option v-for="option in domains" v-bind:value="option">
+                                    {{ option.title }}
+                                </option>
+                            </select>
+                        </form>
 
                                     <div class="row">
                                         <b-col>
@@ -114,8 +120,10 @@
     import 'bootstrap-vue/dist/bootstrap-vue.css'
     import datePicker from 'vue-bootstrap-datetimepicker';
     import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
+    import axios from 'axios';
     Vue.use(BootstrapVue);
     Vue.use(datePicker);
+
     export default {
         props: ['rule'],
         data() {
@@ -130,7 +138,8 @@
                     format: 'YYYY-MM-DD',
                     useCurrent: false,
                 },
-                dynamicAreas: []
+                dynamicAreas: [],
+                domains: []
             }
         },
         watch: {
@@ -138,6 +147,9 @@
                 this.formErrors = {}
                 this.selectedFile = undefined
                 this.selectedFileName = this.rule.imageName
+            },
+            'rule.domainDTO'() {
+                this.rule.area = this.rule.domainDTO.title
             }
         },
         methods: {
@@ -177,6 +189,16 @@
             countDownChanged(dismissCountDown) {
                 this.dismissCountDown = dismissCountDown
             },
+        },
+
+        created() {
+            axios.get(`/rest/gamification/api/v1/domains`)
+                .then(response => {
+                    this.domains = response.data;
+                })
+                .catch(e => {
+                    this.errors.push(e)
+                })
         }
     }
 </script>
