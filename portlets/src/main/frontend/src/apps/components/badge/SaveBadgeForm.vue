@@ -1,20 +1,32 @@
 <template>
 
-    <div>
+    <div style="line-height: 20px;">
         <div class="container fluid">
             <div class="col-sm-12 card">
 
+
                 <div>
-                    <div class="btn" id="headingOne">
-                        <h5 class="mb-0"><button aria-controls="collapseOne" aria-expanded="true" class="btn btn-link primary" data-target="#collapseOne" data-toggle="collapse" type="button">add rule</button></h5>
+                   <div class="btn" id="headingOne">
+                        <h5 class="mb-0">
+
+                            <h5 class="mb-0"><button aria-controls="collapseOne" aria-expanded="false" class="btn btn-link primary" data-target="#collapseOne" data-toggle="collapse" type="button">add Badge</button></h5>
+
+                        </h5>
                     </div>
 
-                    <div aria-labelledby="headingOne" class="in collapse show" data-parent="#accordionExample" id="collapseOne" style="height: auto;">
+
+                    <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionExample" id="collapseOne" style="height: 0px;top: 35px;">
                         <div class="card-body">
 
-                <form-row>
-                    <div class="card">
-                        <form-group id="titleInputGroup">
+                            <div class="UIPopupWindow uiPopup UIDragObject NormalStyle" id="myForm" style="width: 560px; z-index:1000000; position: relative; top: auto; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;">
+                             <!-- <div tabindex="-1" style="position: absolute; z-index: 10000; top: 0px; left: 0px; width: 1284px; height: 377px;" class="uiPopupWrapper"> </div> -->
+                                <div class="popupHeader ClearFix">
+                                    <a class="uiIconClose pull-right" aria-hidden="true" data-dismiss="modal" ></a>
+                                    <span class="PopupTitle popupTitle">Add Badge</span>
+                                </div>
+                                <div class="PopupContent popupContent">
+
+                        <form id="titleInputGroup">
                             <label class="pt-0">Title:</label>
                             <input id="titleInput" type="text" v-model="badge.title" class="form-control" required placeholder="Enter badge's title">
                             </input>
@@ -23,7 +35,7 @@
                                      @dismiss-count-down="countDownChanged">
                                 Badge title is required please enter a title {{dismissCountDown}} ...
                             </b-alert>
-                        </form-group>
+                        </form>
 
                         <div id="descriptionInputGroup">
                             <label class="col-form-label pt-0" id="descriptionInput">Description:</label>
@@ -31,7 +43,15 @@
                             </textarea>
                         </div>
 
-                        <form-group id="neededScoreInputGroup" >
+
+
+
+
+
+
+
+
+                        <form id="neededScoreInputGroup" >
                             <label id="Needed" label-for="neededScoreInput" class="pt-0">score:</label>
                             <input id="neededScoreInput" type="number" v-model="badge.neededScore" class="form-control" required placeholder="Enter badge's needed score">
                             </input>
@@ -39,21 +59,14 @@
                                      @dismiss-count-down="countDownChanged">
                                 Badge needed score is required please enter a value {{dismissCountDown}} ...
                             </b-alert>
-                        </form-group>
-
-                        <form-group id="iconInputGroup">
+                        </form>
+                        <form id="iconInputGroup">
                             <label id="iconInput" label-for="iconInput" class="pt-0"> Icon: </label>
                             <b-form-file v-model="badge.icon" placeholder="Choose a file..." accept="image/jpeg, image/png, image/gif"></b-form-file>
 
-                        </form-group>
+                        </form>
 
-
-
-
-                    </div>
-                    <div class="card">
-
-                        <form-group id="startValidityDateInputGroup ">
+                    <!--    <form-group id="startValidityDateInputGroup ">
                             <label id="startValidityInputGroup" for="startValidityInput" class="col-form-label pt-0">Start Validity Date:</label>
 
                             <date-picker name="startValidityDateInput" id="startValidityDateInput" v-model="badge.startValidityDate" :config="config"
@@ -63,9 +76,9 @@
                         <form-group id="endValidityDateInputGroup">
                             <label id="End Validity Date:" class="col-form-label pt-0" label-for="endValidityDateInput">End Validity Date:</label>
                             <date-picker name="endValidityDateInput" id="endValidityDateInput" v-model="badge.endValidityDate" :config="config" placeholder="Enter badge's start validity date"></date-picker>
-                        </form-group>
+                        </form-group> -->
 
-                        <form-group id="domainSelectboxGroup">
+                        <form id="domainSelectboxGroup">
                             <select v-model="badge.domain" class="mb-4" required>
                                 <template slot="first">
 
@@ -85,28 +98,41 @@
                                      @dismiss-count-down="countDownChanged">
                                 Domain is required please choice a domain {{dismissCountDown}} ...
                             </b-alert>
-                        </form-group>
+                        </form>
 
-                        <div id="enableCheckboxGroup">
+                        <!--<div id="enableCheckboxGroup">
                             <b-form-checkbox v-model="badge.enabled">Enable rule</b-form-checkbox>
                         </div>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                            <label class="custom-control-label" for="customSwitch1" v-model="badge.enabled">Enable badge</label>
+                        </div> -->
+                                    <label class="switch">
+                                        <input type="checkbox" v-model="badge.enabled" checked>
+                                        <span class="slider round"></span>
+                                        <span class="absolute-no">NO</span>
+                                    </label>
 
 
-                        <b-row>
+                        <b-row style="display: inherit;">
                             <b-col>
 
                                 <b-button type="submit" v-on:click.prevent="onSubmit" class="btn btn-primary">
                                     {{badge.id ? 'Update' : 'Add'}} badge
                                 </b-button>
                             </b-col>
-                            <div>
+                            <div style="width: max-content;margin-top: 2em;padding: 2px 20px;">
                                 <button type="submit" v-if="badge.id" v-on:click.prevent="onCancel" class="btn btn-secondary">Cancel</button>
-
                             </div>
                         </b-row>
                     </div>
-                </form-row>
+                            </div>
                         </div>
+
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -121,10 +147,10 @@
     import axios from 'axios'
     import BootstrapVue from 'bootstrap-vue'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
-    import datePicker from 'vue-bootstrap-datetimepicker'
-    import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
+    // import datePicker from 'vue-bootstrap-datetimepicker'
+   // import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
     Vue.use(BootstrapVue);
-    Vue.use(datePicker);
+  //  Vue.use(datePicker);
 
     export default {
         props: ['badge'],
@@ -152,6 +178,7 @@
             }
         },
         methods: {
+
             validateForm() {
                 const errors = {}
 
@@ -207,6 +234,7 @@
 
 
     }
+
 </script>
 
 <style scoped>
@@ -300,7 +328,7 @@
     .card label {
         display: block;
     }
-    form-row {
+    form {
         display: flex;
         flex-wrap: wrap;
     }
@@ -356,4 +384,108 @@
     .collapse {
         top: 15px;
     }
+
+    div#collapseOne {
+        position: absolute;
+        width: 100%;
+        min-width: 100%;
+        z-index: 100;
+        padding: 2px 20px;
+    }
+    /* switch test */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 190px;
+        height: 50px;
+        zoom: 50%;
+    }
+
+    .switch input {display:none;}
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #f2f2f2;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        z-index: 2;
+        content: "";
+        height: 65px;
+        width: 54px;
+        left: 2px;
+        bottom: -1px;
+        background-color: darkslategrey;
+        -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+        -webkit-transition: .4s;
+        transition: all 0.4s ease-in-out;
+    }
+    .slider:after {
+        position: absolute;
+        left: 0;
+        z-index: 1;
+        content: "YES";
+        font-size: 45px;
+        text-align: left !important;
+        line-height: 51px;
+        padding-left: 0;
+        width: 130px;
+        color: #fff;
+        height: 50px;
+        border-radius: 100px;
+        background-color: #ff6418;
+        -webkit-transform: translateX(-160px);
+        -ms-transform: translateX(-160px);
+        transform: translateX(-160px);
+        transition: all 0.4s ease-in-out;
+    }
+
+    input:checked + .slider:after {
+        -webkit-transform: translateX(0px);
+        -ms-transform: translateX(0px);
+        transform: translateX(0px);
+        /*width: 235px;*/
+        padding-left: 25px;
+    }
+
+    input:checked + .slider:before {
+        background-color: #fff;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(160px);
+        -ms-transform: translateX(160px);
+        transform: translateX(160px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 100px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+    .absolute-no {
+        position: absolute;
+        left: 0;
+        color: darkslategrey;
+        text-align: right !important;
+        font-size: 40px;
+        width: calc(100% - 60px);
+        height: 84px;
+        line-height: 51px;
+        cursor: pointer;
+    }
+
 </style>

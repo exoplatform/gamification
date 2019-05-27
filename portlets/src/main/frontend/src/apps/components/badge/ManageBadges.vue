@@ -2,12 +2,12 @@
 <template>
     <section>
 
-        <b-alert v-if="addSuccess" variant="success" show dismissible>Rule {{updateMessage}} successully</b-alert>
+        <b-alert v-if="addSuccess" variant="success" show dismissible>Badge {{updateMessage}} successully </b-alert>
 
         <b-alert v-if="addError" variant="danger" show dismissible>An error happen when adding a badge</b-alert>
 
         <save-badge-form :badge="badgeInForm" v-on:submit="onBadgeAction" v-on:cancel="resetBadgeInForm"></save-badge-form>
-        <badge-list :badges="badges" v-on:edit="onEditClicked" v-on:remove="onRemoveClicked"></badge-list>
+        <badge-list :badges="badges" v-on:save="onSaveClicked" v-on:remove="onRemoveClicked"></badge-list>
     </section>
 </template>
 <script>
@@ -57,9 +57,9 @@
             resetBadgeInForm() {
                 this.badgeInForm = initialData().badgeInForm
             },
-            onEditClicked(badge) {
+            onSaveClicked(badge) {
 
-                this.badgeInForm = { ...badge }
+                this.updateBadge(badge)
             },
             onBadgeAction(badge) {
                 const index = this.badges.findIndex((p) => p.id === badge.id)
