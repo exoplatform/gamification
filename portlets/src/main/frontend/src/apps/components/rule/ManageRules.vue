@@ -1,4 +1,4 @@
-~
+
 <template>
     <section>
        
@@ -7,7 +7,8 @@
         <b-alert v-if="addError" variant="danger" show dismissible>An error happen when adding a rule</b-alert>
        
         <save-rule-form :rule="ruleInForm" v-on:submit="onRuleAction" v-on:cancel="resetRuleInForm"></save-rule-form>
-        <rule-list :rules="rules" v-on:edit="onEditClicked" v-on:remove="onRemoveClicked"></rule-list>
+        <rule-list  :rules="rules" v-on:save="onSaveClicked" v-on:remove="onRemoveClicked"></rule-list>
+
     </section>
 </template>
 <script>
@@ -28,8 +29,6 @@
                 title: '',
                 description: '',
                 score: null,
-                startValidity: null,
-                endValidity: null,
                 enabled: null,
                 area: ''
             },
@@ -51,10 +50,11 @@
             resetRuleInForm() {
                 this.ruleInForm = initialData().ruleInForm
             },
-            onEditClicked(rule) {
+            onSaveClicked (rule) {
                 
-                this.ruleInForm = { ...rule }
+                this.updateRule(rule)
             },
+
             onRuleAction(rule) {
                 const index = this.rules.findIndex((p) => p.id === rule.id)
                 

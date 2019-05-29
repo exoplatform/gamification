@@ -50,7 +50,7 @@
                         </td>
 
 
-                        <td class="badge-icon-col">
+                        <td class="badge-icon-col" style="max-width: 185px;">
                             <span v-if="editedbadge.id !== badge.id">
 
                                 <img thumbnail fluid :src="`/rest/gamification/reputation/badge/${badge.title}/avatar`" alt="Thumbnail" class="m-1"  width="40" height="40"/>
@@ -58,8 +58,7 @@
 
                             </span>
                             <form  v-else id="icon-Edit">
-                                <label id="icon-Edit" label-for="iconInput" > Icon: </label>
-                                <b-form-file v-model="badge.icon" placeholder="Choose a file..." accept="image/jpeg, image/png, image/gif"></b-form-file>
+                                <b-form-file v-model="badge.icon" placeholder="+" accept="image/jpeg, image/png, image/gif"></b-form-file>
 
                             </form>
                         </td>
@@ -246,7 +245,7 @@
     .switch {
         position: relative;
         display: inline-block;
-        width: 190px;
+        width: 150px;
         height: 50px;
         zoom: 30%;
     }
@@ -274,7 +273,7 @@
         width: 54px;
         left: 2px;
         bottom: -1px;
-        background-color: darkslategrey;
+        background-color: darkgrey;
         -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
         -webkit-transition: .4s;
@@ -293,7 +292,7 @@
         color: #fff;
         height: 50px;
         border-radius: 100px;
-        background-color: #ff6418;
+        background-color: #578dc9;
         -webkit-transform: translateX(-160px);
         -ms-transform: translateX(-160px);
         transform: translateX(-160px);
@@ -329,10 +328,10 @@
     .absolute-no {
         position: absolute;
         left: 0;
-        color: darkslategrey;
+        color: darkgrey;
         text-align: right !important;
         font-size: 40px;
-        width: calc(100% - 60px);
+        width: calc(100% - 25px);
         height: 84px;
         line-height: 51px;
         cursor: pointer;

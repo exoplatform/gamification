@@ -2,7 +2,8 @@
 <template>
     <b-container fluid>
         <b-row>
-            <b-col sm="12" >
+            <b-col sm="12">
+
                 <!-- <b-col md="6" class="my-1">
                     <b-form-group horizontal label="Filter" class="mb-0">
                       <b-input-group>
@@ -17,25 +18,56 @@
                 <table striped hover class="uiGrid table table-hover rule-table">
                     <thead>
                         <tr>
-               
-                            <th class="rule-name-col">Title</th>
                             <th class="rule-desc-col">Description</th>
+                            <th class="rule-name-col">Title</th>
+
                             <th class="rule-price-col">score</th>
-                            <th class="rule-area-col">Area</th>
+                            <th class="rule-area-col">Domain</th>
                             <th class="rule-enable-col">Enabled</th>
                             <th class="rule-action-col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="rule in rules" track-by="id" v-on:click.prevent="onEdit(rule)">
-         
-                            <td>{{rule.title}}</td>
-                            <td class="rule-desc-col">{{rule.description}}</td>
-                            <td>{{rule.score}}</td>
-                            <td>{{rule.area}}</td>
-                            <td>{{rule.enabled}}</td>
-                            <td>
-                                <a href="#" v-on:click.prevent.stop="onRemove(rule.id,rule.title)" data-placement="bottom" rel="tooltip" class="actionIcon" data-original-title="Supprimer" v-b-tooltip.hover title="Supprimer"><i class="uiIconDelete uiIconLightGray"></i></a>
+                    <tr v-for="rule in rules" track-by="id" v-on:click.prevent="onEdit(rule)">
+
+                        <td> <div v-if="editedrule.id !== rule.id">{{rule.title}} </div>
+                            <input type="text" v-if="editedrule.id === rule.id" v-model="rule.title"style="width: 130px;">
+                        </td>
+                        <td class="rule-desc-col"><div v-if="editedrule.id !== rule.id">{{rule.description}}</div>
+                            <input type="text" v-if="editedrule.id === rule.id" v-model="rule.description"style="width: 130px;">
+                        </td>
+                        <td><div v-if="editedrule.id !== rule.id">{{rule.score}}</div>
+                            <input  class="rule-needed-score-col" type="text" v-if="editedrule.id === rule.id" v-model="rule.neededScore">
+                        </td>
+                        <td><div v-if="editedrule.id !== rule.id">{{rule.area}}</div>
+                            <select type="text" v-if="editedrule.id === rule.id" v-model="badge.domain" class="mb-4" style="height: 38px;" required>
+                                <template slot="first">
+
+                                    <option :value="null" disabled></option>
+                                </template>
+
+                                <option value="Social">Social</option>
+                                <option value="Knowledge">Knowledge</option>
+                                <option value="Teamwork">Teamwork</option>
+                                <option value="Feedback">Feedback</option>
+
+                                <!--<option value="Content">Content</option>-->
+                            </select>
+                        </td>
+                        <td>{{rule.enabled}}</td>
+                        <td>
+                             <a href="#" v-if="editedrule.id !== rule.id" v-on:click.stop="onEdit(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
+                                data-original-title="Edit" v-b-tooltip.hover title="Edit">
+                                 <i class="uiIconEdit uiIconLightGray"></i></a>
+                             <a href="#" v-if="editedrule.id !== rule.id" v-on:click.prevent.stop="onRemove(rule.id,rule.title)" data-placement="bottom" rel="tooltip" class="actionIcon" data-original-title="Supprimer" v-b-tooltip.hover title="Supprimer">
+                                 <i class="uiIconDelete uiIconLightGray"></i></a>
+
+                            <a href="#" v-if="editedrule.id === rule.id"v-on:click.stop="onSave(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
+                               data-original-title="Edit" v-b-tooltip.hover title="Save">
+                                <i class="uiIconSave uiIconLightGray"></i></a>
+                            <a href="#" v-if="editedrule.id === rule.id" v-on:click.stop="onCancel(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
+                               data-original-title="Cancel" v-b-tooltip.hover title="Cancel">
+                                <i class="uiIcon uiIconStatus-canceled uiIconLightGray"></i></a>
                             </td>
                         </tr>
                         <tr v-if="!rules.length">
@@ -65,12 +97,25 @@
         props: ['rules'],
         data() {
             return {
+                formErrors: {},
+                editedrule : {}
 
             }
         },
         methods: {
             onEdit(rule) {
-                this.$emit('edit', rule)
+                this.editedrule=rule;
+               // this.$emit('edit', rule)
+            },
+            onSave(rule) {
+                this.$emit('save', rule);
+                this.editedrule= {};
+            },
+            onCancel(rule) {
+
+                this.$emit('cancel', rule);
+                this.editedrule= {};
+
             },
             onRemove(id, title) {
                 this.$emit('remove', id, title)
@@ -106,9 +151,23 @@
     .table-hover tbody tr:hover{
         cursor: pointer;
     }
-    .table-striped>tbody>tr:nth-of-type(odd){
-        background-color: #f9f9f9;
+
+
+    /*edit Mode */
+    td input {
+        max-width: min-content;
+    }
+    td.rule-needed-score-col input {
+        width: 60px;
+        text-align: center;
+    }
+    td select {
+        word-wrap: normal;
+        max-width: min-content;
     }
 
 
+    input.rule-desc-col {
+        min-width: 98%;
+    }
 </style>

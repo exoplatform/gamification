@@ -21,7 +21,8 @@
                             <div class="UIPopupWindow uiPopup UIDragObject NormalStyle" id="myForm" style="width: 560px; z-index:1000000; position: relative; top: auto; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;">
                              <!-- <div tabindex="-1" style="position: absolute; z-index: 10000; top: 0px; left: 0px; width: 1284px; height: 377px;" class="uiPopupWrapper"> </div> -->
                                 <div class="popupHeader ClearFix">
-                                    <a class="uiIconClose pull-right" aria-hidden="true" data-dismiss="modal" ></a>
+                                    <a class="uiIconClose" aria-controls="collapseOne" aria-expanded="false" data-target="#collapseOne" data-toggle="collapse" aria-hidden="true" data-dismiss="modal" ></a>
+
                                     <span class="PopupTitle popupTitle">Add Badge</span>
                                 </div>
                                 <div class="PopupContent popupContent">
@@ -396,7 +397,7 @@
     .switch {
         position: relative;
         display: inline-block;
-        width: 190px;
+        width: 150px;
         height: 50px;
         zoom: 50%;
     }
@@ -424,7 +425,7 @@
         width: 54px;
         left: 2px;
         bottom: -1px;
-        background-color: darkslategrey;
+        background-color: darkgrey;
         -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
         -webkit-transition: .4s;
@@ -443,7 +444,7 @@
         color: #fff;
         height: 50px;
         border-radius: 100px;
-        background-color: #ff6418;
+        background-color: #578dc9;
         -webkit-transform: translateX(-160px);
         -ms-transform: translateX(-160px);
         transform: translateX(-160px);
@@ -479,10 +480,10 @@
     .absolute-no {
         position: absolute;
         left: 0;
-        color: darkslategrey;
+        color: darkgrey;
         text-align: right !important;
         font-size: 40px;
-        width: calc(100% - 60px);
+        width: calc(100% - 25px);
         height: 84px;
         line-height: 51px;
         cursor: pointer;

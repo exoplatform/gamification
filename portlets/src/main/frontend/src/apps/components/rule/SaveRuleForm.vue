@@ -3,19 +3,23 @@
 
             <div class="col-sm-12 card">
 
-                <div>
-                    <div class="btn" id="headingOne">
-                        <h5 class="mb-0"><button aria-controls="collapseOne" aria-expanded="true" class="btn btn-link primary" data-target="#collapseOne" data-toggle="collapse" type="button">add rule</button></h5>
+                <div class="btn" id="headingOne">
+
+                        <button aria-controls="collapseOne" aria-expanded="false" class="btn btn-link primary" data-target="#collapseOne" data-toggle="collapse" type="button">add Rule</button>
+
+                </div>
+                <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionExample" id="collapseOne" style="height: 0px;top: 80px;">
+
+
+                    <div class="UIPopupWindow uiPopup UIDragObject NormalStyle" id="myForm" style="width: 560px; z-index:1000000; position: relative; top: 20%; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;">
+                   <!--  <div tabindex="-1" style="position: fixed; z-index: 10000; top: 0px; left: 0px; width: 1284px; height: 377px;" class="uiPopupWrapper"> </div> -->
+                    <div class="popupHeader ClearFix">
+                        <a class="uiIconClose pull-right"  aria-controls="collapseOne" aria-expanded="false" data-target="#collapseOne" data-toggle="collapse" aria-hidden="true" data-dismiss="modal" ></a>
+                        <span class="PopupTitle popupTitle">Add Rule</span>
                     </div>
-
-                    <div aria-labelledby="headingOne" class="in collapse show" data-parent="#accordionExample" id="collapseOne" style="height: auto;">
-                        <div class="card-body">
-                            <form-row>
-                                <div class="card body">
-
                                     <form-group id="titleInputGroup">
                                         <label class="col-form-label pt-0">Title:</label>
-                                        <input id="titleInput" type="text" v-model="rule.title" required placeholder="Enter rule's title">
+                                        <input id="titleInput" type="text" v-model="rule.title" v-on:click="ModifierFn" required placeholder="Enter rule's title">
                                         </input>
 
 
@@ -32,6 +36,8 @@
                                         <textarea id="ruleDescription" v-model="rule.description" placeholder="Enter description" :rows="3" :max-rows="6">
                             </textarea>
                                     </form>
+
+
                                     <form id="scoreInputGroup">
 
                                         <label id="scoreInputGroup" for="scoreInput" class="col-form-label pt-0">Score:</label>
@@ -41,11 +47,7 @@
                                             Rule score is required please enter a score {{dismissCountDown}} ...
                                         </b-alert>
                                     </form>
-                                </div>
-
-                                <div class="card col">
-
-                                    <form id="startValidityInputGroup">
+                                    <!--<form id="startValidityInputGroup">
                                         <label id="startValidityInputGroup" for="startValidityInput" class="col-form-label pt-0">Start validity:</label>
                                         <date-picker name="endValidityDateInput" id="startValidityInput" v-model="rule.startValidity" :config="config" required placeholder="Enter rule's start validity"></date-picker>
                                         <b-alert v-if="formErrors.startValidity" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
@@ -67,7 +69,14 @@
                                             <input type="checkbox" v-model="rule.enabled"> Enable rule
                                         </label>
 
+                                    </div>  -->
+
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                        <label class="custom-control-label" for="customSwitch1" v-model="rule.enabled"> Enable rule
+                                        </label>
                                     </div>
+
 
                                     <form id="areaSelectboxGroup">
                                         <select v-model="rule.area" class="mb-4">
@@ -85,24 +94,22 @@
 
                                     <div class="row">
                                         <b-col>
-                                            <b-button type="submit" v-on:click.prevent="onSubmit" class="btn btn-primary" :size="lg">
+                                            <b-button type="submit" v-on:click.prevent="onSubmit" class="btn btn-primary">
                                                 {{rule.id ? 'Update' : 'Add'}} rule
                                             </b-button>
                                         </b-col>
+
                                         <b-col>
                                             <button type="submit" v-if="rule.id" v-on:click.prevent="onCancel" class="btn btn-secondary">Cancel</button>
                                         </b-col>
                                     </div>
-
-                                </div>
-                            </form-row>
                         </div>
-                    </div>
                 </div>
+                </div>
+                            </div>
 
-            </div>
 
-        </div>
+
 
 </template>
 
@@ -112,10 +119,10 @@
     import BootstrapVue from 'bootstrap-vue'
     import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
-    import datePicker from 'vue-bootstrap-datetimepicker';
-    import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
+    //import datePicker from 'vue-bootstrap-datetimepicker';
+ //   import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
     Vue.use(BootstrapVue);
-    Vue.use(datePicker);
+   // Vue.use(datePicker);
     export default {
         props: ['rule'],
         data() {
@@ -140,6 +147,7 @@
                 this.selectedFileName = this.rule.imageName
             }
         },
+
         methods: {
             validateForm() {
                 const errors = {}
@@ -151,14 +159,8 @@
                     errors.score = 'Score is required'
                     this.dismissCountDown = 5
                 }
-                if (!this.rule.startValidity) {
-                    errors.startValidity = 'Start validity date is required'
-                    this.dismissCountDown = 5
-                }
-                if (!this.rule.endValidity) {
-                    errors.endValidity = 'End validity date is required'
-                    this.dismissCountDown = 5
-                }
+
+
                 this.formErrors = errors
                 return Object.keys(errors).length === 0
             },
@@ -173,12 +175,19 @@
                 if (this.validateForm()) {
                     this.$emit('submit', this.rule)
                 }
+
             },
             countDownChanged(dismissCountDown) {
                 this.dismissCountDown = dismissCountDown
             },
         }
+
     }
+    $(function() {
+        $('#toggle-event').change(function() {
+            $('#console-event').html('Toggle: ' + $(this).prop('checked'))
+        })
+    })
 </script>
 
 <style scoped>
@@ -194,7 +203,7 @@
         margin-right: -5px;
         margin-left: -5px;
     }
-    h5.mt-0 {
+    btn {
         color: #4d5466;
         font-family: Helvetica, arial, sans-serif;
         line-height: 20px;
@@ -234,13 +243,13 @@
         border-radius: 3px;
         background: #ffffff;
         margin-bottom: 20px;
-        width: 100%;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         margin: 10px auto;
         padding: 15px;
         flex-basis: 0;
         flex-grow: 1;
     }
+
     .require-msg{
         max-width: 100% !important;
         font-size: 14px;
@@ -271,13 +280,15 @@
         background: transparent;
         border: 1px solid blue;
     }*/
-    h5.mb-0 {
-        height: auto;
-    }
+
     div#headingOne:hover {
         background: transparent;
     }
-    button.btn.btn-link.primary.collapsed, button.btn.btn-link.primary {
+    .btn {
+        display: inline-block;
+        padding: 1.25rem 0.75rem;
+    }
+    button.btn.btn-link.primary.collapsed, button.btn.btn-link.primary{
         background: #3c8dbc;
         color: white;
         padding: 5px 10px;
@@ -303,4 +314,27 @@
     .collapse {
         top: 15px;
     }
+    .btn.btn-primary, .btn-primary {
+        padding: 7px 20px;
+        margin: 0 5px;
+        background: #578dc9;
+    }
+
+
+    div#collapseOne {
+        position: absolute;
+        width: 100%;
+        min-width: 100%;
+        z-index: 100;
+        padding: 2px 20px;
+    }
+   /* div#collapseOne .card {
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+    } */
 </style>
