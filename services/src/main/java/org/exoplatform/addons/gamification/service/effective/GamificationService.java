@@ -33,7 +33,7 @@ public class GamificationService {
     }
 
     @ExoTransactional
-    public GamificationActionsHistory findLatestActionHistoryBySocialId(String userSocialId) {
+    public GamificationActionsHistory findLatestActionHistoryBySocialId(String userSocialId) throws Exception {
 
         List<GamificationActionsHistory> entities = null;
 
@@ -58,7 +58,7 @@ public class GamificationService {
      * @param socialId : filter by socialId*/
 
     @ExoTransactional
-    public List<GamificationActionsHistory> findActionHistoryByDateBySocialId(Date date, String socialId) {
+    public List<GamificationActionsHistory> findActionHistoryByDateBySocialId(Date date, String socialId) throws Exception {
 
         List<GamificationActionsHistory> entities = null;
 
@@ -73,7 +73,7 @@ public class GamificationService {
 
     }
 
-    public int bluidCurrentUserRank (String socialId, Date date, String domain) {
+    public int bluidCurrentUserRank (String socialId, Date date, String domain) throws Exception {
         List<StandardLeaderboard> leaderboard = null;
         int rank = 0;
         try {
@@ -111,7 +111,7 @@ public class GamificationService {
      * @return long score of user
      */
     @ExoTransactional
-    public long findUserReputationBySocialId(String socialId) {
+    public long findUserReputationBySocialId(String socialId) throws Exception {
 
         GamificationActionsHistory aHistory = null;
 
@@ -136,7 +136,7 @@ public class GamificationService {
      * @return list of objects of type ProfileReputation
      */
     @ExoTransactional
-    public List<ProfileReputation> buildDomainScoreByUserId(String socialId) {
+    public List<ProfileReputation> buildDomainScoreByUserId(String socialId) throws Exception {
 
         List<ProfileReputation> domainsScore = null;
 
@@ -159,7 +159,7 @@ public class GamificationService {
      * @param aHistory
      */
     @ExoTransactional
-    public void saveActionHistory(GamificationActionsHistory aHistory) {
+    public void saveActionHistory(GamificationActionsHistory aHistory) throws Exception {
 
         try {
             gamificationHistoryDAO.create(aHistory);
@@ -175,7 +175,7 @@ public class GamificationService {
      * @return list of objects of type StandardLeaderboard
      */
     @ExoTransactional
-    public List<StandardLeaderboard> filter(LeaderboardFilter filter, boolean isGlobalContext) {
+    public List<StandardLeaderboard> filter(LeaderboardFilter filter, boolean isGlobalContext) throws Exception {
         List<StandardLeaderboard> leaderboard = null;
 
         if (LOG.isDebugEnabled()) {
@@ -239,7 +239,7 @@ public class GamificationService {
      * @return a list of object of type PiechartLeaderboard
      */
     @ExoTransactional
-    public List<PiechartLeaderboard> buildStatsByUser(String userSocialId) {
+    public List<PiechartLeaderboard> buildStatsByUser(String userSocialId) throws Exception {
 
         List<PiechartLeaderboard> userStats = null;
 
@@ -255,7 +255,7 @@ public class GamificationService {
     }
 
     @ExoTransactional
-    public long findUserReputationScoreBetweenDate(String userSocialId, Date fromDate, Date toDate) {
+    public long findUserReputationScoreBetweenDate(String userSocialId, Date fromDate, Date toDate) throws Exception {
 
         long reputationScore = 0;
 
@@ -271,7 +271,7 @@ public class GamificationService {
     }
 
     @ExoTransactional
-    public long findUserReputationScoreByMonth(String userSocialId, Date currentMonth) {
+    public long findUserReputationScoreByMonth(String userSocialId, Date currentMonth) throws Exception {
 
         long reputationScore = 0;
 
@@ -287,7 +287,7 @@ public class GamificationService {
     }
 
     @ExoTransactional
-    public long findUserReputationScoreByDomainBetweenDate(String userSocialId, String domain, Date fromDate, Date toDate) {
+    public long findUserReputationScoreByDomainBetweenDate(String userSocialId, String domain, Date fromDate, Date toDate) throws Exception {
 
         long reputationScore = 0;
 
@@ -304,7 +304,7 @@ public class GamificationService {
 
     /** Provided as an API from Wallet addon*/
     @ExoTransactional
-    public List<StandardLeaderboard> findAllLeaderboardBetweenDate(Date fromDate, Date toDate) {
+    public List<StandardLeaderboard> findAllLeaderboardBetweenDate(Date fromDate, Date toDate) throws Exception {
 
         List<StandardLeaderboard> list = null;
 
@@ -346,7 +346,7 @@ public class GamificationService {
  list to  find gamification history from the GamificationInformationsPortlet's receiver earned points by date
  */
    @ExoTransactional
-    public List<GamificationActionsHistory> findActionsHistoryByReceiverId(String Receiver, boolean isGlobalContext, int loadCapacity) {
+    public List<GamificationActionsHistory> findActionsHistoryByReceiverId(String Receiver, boolean isGlobalContext, int loadCapacity) throws Exception {
 
         List<GamificationActionsHistory> list = null;
         try {
@@ -387,8 +387,12 @@ public class GamificationService {
     if (ruleDto != null) {
       aHistory = new GamificationActionsHistory();
       aHistory.setActionScore(ruleDto.getScore());
-      aHistory.setGlobalScore(computeTotalScore(actor) + ruleDto.getScore());
-      aHistory.setDate(new Date());
+        try {
+            aHistory.setGlobalScore(computeTotalScore(actor) + ruleDto.getScore());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        aHistory.setDate(new Date());
       aHistory.setUserSocialId(actor);
       aHistory.setActionTitle(ruleDto.getTitle());
       aHistory.setDomain(ruleDto.getArea());
@@ -404,7 +408,7 @@ public class GamificationService {
     return aHistory;
   }
  
-  public long computeTotalScore(String actorIdentityId) {
+  public long computeTotalScore(String actorIdentityId) throws Exception {
     return gamificationHistoryDAO.computeTotalScore(actorIdentityId);
   }
 }
