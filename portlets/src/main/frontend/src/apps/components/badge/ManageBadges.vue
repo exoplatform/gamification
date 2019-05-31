@@ -130,8 +130,6 @@
                         console.log("Error")
 
                     })
-
-
             },
             updateBadge(badgeDTO) {
 

@@ -64,7 +64,6 @@
                         <form id="iconInputGroup">
                             <label id="iconInput" label-for="iconInput" class="pt-0"> Icon: </label>
                             <b-form-file v-model="badge.icon" placeholder="Choose a file..." accept="image/jpeg, image/png, image/gif"></b-form-file>
-
                         </form>
 
                     <!--    <form-group id="startValidityDateInputGroup ">
