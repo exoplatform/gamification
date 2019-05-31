@@ -2,7 +2,7 @@
     <b-container fluid>
         <b-row>
             <b-col sm="12" >
-                <b-col md="6" class="my-1">
+                <!-- <b-col md="6" class="my-1">
                     <b-form-group horizontal label="Filter" class="mb-0">
                         <b-input-group>
                             <b-form-input v-model="filter" placeholder="Type to Search" />
@@ -11,7 +11,7 @@
                             </b-input-group-append>
                         </b-input-group>
                     </b-form-group>
-                </b-col>
+                </b-col> -->
 
                 <table striped hover class="uiGrid table table-hover table-striped rule-table">
                     <thead>
@@ -106,6 +106,9 @@
     }
     .table-striped>tbody>tr:nth-of-type(odd){
         background-color: #f9f9f9;
+    }
+    .btn:focus, .btn.focus {
+        box-shadow: none;
     }
 
     /* switch test */

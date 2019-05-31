@@ -7,11 +7,7 @@
 
                 <div>
                    <div class="btn" id="headingOne">
-                        <h5 class="mb-0">
-
                             <h5 class="mb-0"><button aria-controls="collapseOne" aria-expanded="false" class="btn btn-link primary" data-target="#collapseOne" data-toggle="collapse" type="button">add Badge</button></h5>
-
-                        </h5>
                     </div>
 
 
@@ -337,9 +333,14 @@
         width: max-content;
         margin-top: 2em;
     }
+    .btn {
+        display: inline-block;
+        padding: 1.25rem 0.75rem;
+    }
 
-
-
+    div#headingOne:hover {
+        background: transparent;
+    }
     .custom-file-label:after {
         position: absolute;
         right: 5px;
