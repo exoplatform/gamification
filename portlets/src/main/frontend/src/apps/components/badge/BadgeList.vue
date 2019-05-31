@@ -23,17 +23,14 @@
                         <td class="badge-desc-col">{{badge.description}}</td>
                         <td class="badge-needed-score-col">{{badge.neededScore}}</td>
                         <td class="badge-domain-col">{{badge.domain}}</td>
-                        <td class="badge-icon-col">
-                            <img thumbnail fluid :src="`/rest/gamification/reputation/badge/${badge.title}/avatar`" alt="Thumbnail" class="m-1"  width="40" height="40"/>
-                        </td>
+                        <td class="badge-icon-col"><img thumbnail fluid :src="`/rest/gamification/reputation/badge/${badge.title}/avatar`" alt="Thumbnail" class="m-1"  width="40" height="40"/></td>
                         <td class="badge-status-col">
                             <label class="switch">
                                 <input type="checkbox" v-model="badge.enabled" checked>
                                 <span class="slider round"></span>
                                 <span class="absolute-no">NO</span>
                             </label>
-
-                         </td>
+                            </td>
                         <td class="badge-created-date-col">{{badge.createdBy}}</td>
                         <td class="center actionContainer">
                             <a href="#" v-on:click.prevent.stop="onRemove(badge.id,badge.title)" data-placement="bottom" rel="tooltip" class="actionIcon"
@@ -105,6 +102,7 @@
     .table-striped>tbody>tr:nth-of-type(odd) {
         background-color: #f9f9f9;
     }
+
     /* switch test */
     .switch {
         position: relative;

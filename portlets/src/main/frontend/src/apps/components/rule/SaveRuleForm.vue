@@ -1,112 +1,109 @@
 <template>
     <div>
 
-            <div class="col-sm-12 card">
+        <div class="col-sm-12 card">
 
-                <div class="btn" id="headingOne">
+            <div class="btn" id="headingOne">
 
-                        <button aria-controls="collapseOne" aria-expanded="false" class="btn btn-link primary" data-target="#collapseOne" data-toggle="collapse" type="button">add Rule</button>
+                <button aria-controls="collapseOne" aria-expanded="false" class="btn btn-link primary" data-target="#collapseOne" data-toggle="collapse" type="button">add Rule</button>
 
-                </div>
-                <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionExample" id="collapseOne" style="height: 0px;top: 80px;">
+            </div>
+            <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionExample" id="collapseOne" style="height: 0px;top: 80px;">
 
 
-                    <div class="UIPopupWindow uiPopup UIDragObject NormalStyle" id="myForm" style="width: 560px; z-index:1000000; position: relative; top: 20%; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;">
-                   <!--  <div tabindex="-1" style="position: fixed; z-index: 10000; top: 0px; left: 0px; width: 1284px; height: 377px;" class="uiPopupWrapper"> </div> -->
+                <div class="UIPopupWindow uiPopup UIDragObject NormalStyle" id="myForm" style="width: 560px; z-index:1000000; position: relative; top: 20%; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;">
+                    <!--  <div tabindex="-1" style="position: fixed; z-index: 10000; top: 0px; left: 0px; width: 1284px; height: 377px;" class="uiPopupWrapper"> </div> -->
                     <div class="popupHeader ClearFix">
                         <a class="uiIconClose pull-right"  aria-controls="collapseOne" aria-expanded="false" data-target="#collapseOne" data-toggle="collapse" aria-hidden="true" data-dismiss="modal" ></a>
                         <span class="PopupTitle popupTitle">Add Rule</span>
                     </div>
-                                    <form-group id="titleInputGroup">
-                                        <label class="col-form-label pt-0">Title:</label>
-                                        <input id="titleInput" type="text" v-model="rule.title" v-on:click="ModifierFn" required placeholder="Enter rule's title">
-                                        </input>
+                    <div class="PopupContent popupContent">
+                        <form-group id="titleInputGroup">
+                            <label class="col-form-label pt-0">Title:</label>
+                            <input id="titleInput" type="text" v-model="rule.title" v-on:click="ModifierFn" required placeholder="Enter rule's title">
+                            </input>
 
 
-                                        <b-alert v-if="formErrors.title" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
-                                            Rule title is required please enter a title {{dismissCountDown}} ...
-                                        </b-alert>
-                                    </form-group>
+                            <b-alert v-if="formErrors.title" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
+                                Rule title is required please enter a title {{dismissCountDown}} ...
+                            </b-alert>
+                        </form-group>
 
 
 
-                                    <form id="descriptionInputGroup">
-                                        <label class="col-form-label pt-0">Description:</label>
+                        <form id="descriptionInputGroup">
+                            <label class="col-form-label pt-0">Description:</label>
 
-                                        <textarea id="ruleDescription" v-model="rule.description" placeholder="Enter description" :rows="3" :max-rows="6">
+                            <textarea id="ruleDescription" v-model="rule.description" placeholder="Enter description" :rows="3" :max-rows="6">
                             </textarea>
-                                    </form>
+                        </form>
 
 
-                                    <form id="scoreInputGroup">
+                        <form id="scoreInputGroup">
 
-                                        <label id="scoreInputGroup" for="scoreInput" class="col-form-label pt-0">Score:</label>
-                                        <input id="scoreDescription" type="number" v-model="rule.score" required placeholder="Enter rule's score">
-                                        </input>
-                                        <b-alert v-if="formErrors.score" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
-                                            Rule score is required please enter a score {{dismissCountDown}} ...
-                                        </b-alert>
-                                    </form>
-                                    <!--<form id="startValidityInputGroup">
-                                        <label id="startValidityInputGroup" for="startValidityInput" class="col-form-label pt-0">Start validity:</label>
-                                        <date-picker name="endValidityDateInput" id="startValidityInput" v-model="rule.startValidity" :config="config" required placeholder="Enter rule's start validity"></date-picker>
-                                        <b-alert v-if="formErrors.startValidity" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
-                                            Rule start validity date is required please enter a date {{dismissCountDown}} ...
-                                        </b-alert>
-                                    </form>
-
-                                    <form id="endValidityInputGroup">
-                                        <label id="endValidityInputGroup" for="endValidityInput" class="col-form-label pt-0">End validity:</label>
-                                        <date-picker name="endValidityDateInput" id="endValidityInput" v-model="rule.endValidity" :config="config" required placeholder="Enter rule's end validity"></date-picker>
-                                        <b-alert v-if="formErrors.endValidity" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
-                                            Rule end validity date is required please enter a date {{dismissCountDown}} ...
-                                        </b-alert>
-                                    </form>
-
-                                    <div class="custom-control custom-checkbox custom-control-inline">
-
-                                        <label class="checkbox custom-checkbox" id="enableCheckboxGroup">
-                                            <input type="checkbox" v-model="rule.enabled"> Enable rule
-                                        </label>
-
-                                    </div>  -->
-
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                        <label class="custom-control-label" for="customSwitch1" v-model="rule.enabled"> Enable rule
-                                        </label>
-                                    </div>
+                            <label id="scoreInputGroup" for="scoreInput" class="col-form-label pt-0">Score:</label>
+                            <input id="scoreDescription" type="number" v-model="rule.score" required placeholder="Enter rule's score">
+                            </input>
+                            <b-alert v-if="formErrors.score" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
+                                Rule score is required please enter a score {{dismissCountDown}} ...
+                            </b-alert>
+                        </form>
+                        <!--<form id="startValidityInputGroup">
+                            <label id="startValidityInputGroup" for="startValidityInput" class="col-form-label pt-0">Start validity:</label>
+                            <date-picker name="endValidityDateInput" id="startValidityInput" v-model="rule.startValidity" :config="config" required placeholder="Enter rule's start validity"></date-picker>
+                            <b-alert v-if="formErrors.startValidity" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
+                                Rule start validity date is required please enter a date {{dismissCountDown}} ...
+                            </b-alert>
+                        </form>
+                        <form id="endValidityInputGroup">
+                            <label id="endValidityInputGroup" for="endValidityInput" class="col-form-label pt-0">End validity:</label>
+                            <date-picker name="endValidityDateInput" id="endValidityInput" v-model="rule.endValidity" :config="config" required placeholder="Enter rule's end validity"></date-picker>
+                            <b-alert v-if="formErrors.endValidity" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
+                                Rule end validity date is required please enter a date {{dismissCountDown}} ...
+                            </b-alert>
+                        </form>
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <label class="checkbox custom-checkbox" id="enableCheckboxGroup">
+                                <input type="checkbox" v-model="rule.enabled"> Enable rule
+                            </label>
+                        </div>  -->
+                        <label class="switch">
+                            <input type="checkbox" v-model="rule.enabled" checked>
+                            <span class="slider round"></span>
+                            <span class="absolute-no">NO</span>
+                        </label>
 
 
-                                    <form id="areaSelectboxGroup">
-                                        <select v-model="rule.area" class="mb-4">
-                                            <template slot="first">
+                        <form id="areaSelectboxGroup">
+                            <select v-model="rule.area" class="mb-4">
+                                <template slot="first">
 
-                                                <option :value="null" disabled>-- Please select an area --</option>
-                                            </template>
+                                    <option :value="null" disabled>-- Please select an area --</option>
+                                </template>
 
-                                            <option value="Social">Social</option>
-                                            <option value="Knowledge">Knowledge</option>
-                                            <option value="Teamwork">Teamwork</option>
-                                            <option value="Feedback">Feedback</option>
-                                        </select>
-                                    </form>
+                                <option value="Social">Social</option>
+                                <option value="Knowledge">Knowledge</option>
+                                <option value="Teamwork">Teamwork</option>
+                                <option value="Feedback">Feedback</option>
+                            </select>
+                        </form>
 
-                                    <div class="row">
-                                        <b-col>
-                                            <b-button type="submit" v-on:click.prevent="onSubmit" class="btn btn-primary">
-                                                {{rule.id ? 'Update' : 'Add'}} rule
-                                            </b-button>
-                                        </b-col>
+                        <div class="row">
+                            <b-col>
+                                <b-button type="submit" v-on:click.prevent="onSubmit" class="btn btn-primary">
+                                    {{rule.id ? 'Update' : 'Add'}} rule
+                                </b-button>
+                            </b-col>
 
-                                        <b-col>
-                                            <button type="submit" v-if="rule.id" v-on:click.prevent="onCancel" class="btn btn-secondary">Cancel</button>
-                                        </b-col>
-                                    </div>
+                            <b-col>
+                                <button type="submit" v-if="rule.id" v-on:click.prevent="onCancel" class="btn btn-secondary">Cancel</button>
+                            </b-col>
                         </div>
+                    </div>
                 </div>
-                </div>
-                            </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -120,12 +117,12 @@
     import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
     //import datePicker from 'vue-bootstrap-datetimepicker';
- //   import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
+    //   import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
     Vue.use(BootstrapVue);
-   // Vue.use(datePicker);
+    // Vue.use(datePicker);
     export default {
         props: ['rule'],
-        data() {
+        data: function (){
             return {
                 formErrors: {},
                 selectedFile: undefined,
@@ -147,7 +144,6 @@
                 this.selectedFileName = this.rule.imageName
             }
         },
-
         methods: {
             validateForm() {
                 const errors = {}
@@ -159,8 +155,6 @@
                     errors.score = 'Score is required'
                     this.dismissCountDown = 5
                 }
-
-
                 this.formErrors = errors
                 return Object.keys(errors).length === 0
             },
@@ -175,19 +169,21 @@
                 if (this.validateForm()) {
                     this.$emit('submit', this.rule)
                 }
-
             },
             countDownChanged(dismissCountDown) {
                 this.dismissCountDown = dismissCountDown
             },
+            confirm() {
+                this.$modals.confirm({
+                    message: 'Confirm?',
+                    onApprove: () => { },
+                    onCancel: () => { },
+                });
+            },
+            created() {
+            }
         }
-
     }
-    $(function() {
-        $('#toggle-event').change(function() {
-            $('#console-event').html('Toggle: ' + $(this).prop('checked'))
-        })
-    })
 </script>
 
 <style scoped>
@@ -249,7 +245,6 @@
         flex-basis: 0;
         flex-grow: 1;
     }
-
     .require-msg{
         max-width: 100% !important;
         font-size: 14px;
@@ -265,22 +260,21 @@
         width: auto;
         margin-bottom: 10px;
     }
-   /* button.btn.btn-link, h5.mb-0 {
-        color: #3c8dbc;
-        background: transparent;
-        border: 1px solid lightblue;
-        border-radius: 50%;
-        font-weight: bolder;
-        text-decoration: none;
-        position: absolute;
-        top: 10px;
-    }
-    h5.mb-0:hover, h5.mb-0:focus{
-        color: #3c8dbc;
-        background: transparent;
-        border: 1px solid blue;
-    }*/
-
+    /* button.btn.btn-link, h5.mb-0 {
+         color: #3c8dbc;
+         background: transparent;
+         border: 1px solid lightblue;
+         border-radius: 50%;
+         font-weight: bolder;
+         text-decoration: none;
+         position: absolute;
+         top: 10px;
+     }
+     h5.mb-0:hover, h5.mb-0:focus{
+         color: #3c8dbc;
+         background: transparent;
+         border: 1px solid blue;
+     }*/
     div#headingOne:hover {
         background: transparent;
     }
@@ -288,7 +282,7 @@
         display: inline-block;
         padding: 1.25rem 0.75rem;
     }
-    button.btn.btn-link.primary.collapsed, button.btn.btn-link.primary{
+    button.btn.btn-link.primary.collapsed, button.btn.btn-link.primary, btn{
         background: #3c8dbc;
         color: white;
         padding: 5px 10px;
@@ -319,8 +313,6 @@
         margin: 0 5px;
         background: #578dc9;
     }
-
-
     div#collapseOne {
         position: absolute;
         width: 100%;
@@ -328,13 +320,100 @@
         z-index: 100;
         padding: 2px 20px;
     }
-   /* div#collapseOne .card {
+    /* switch test */
+    .switch {
         position: relative;
+        display: inline-block;
+        width: 150px;
+        height: 50px;
+        zoom: 50%;
+    }
+    .switch input {display:none;}
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        overflow: hidden;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        margin: 0;
-        background-color: rgba(0, 0, 0, 0.3);
-    } */
+        background-color: #f2f2f2;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    .slider:before {
+        position: absolute;
+        z-index: 2;
+        content: "";
+        height: 65px;
+        width: 54px;
+        left: 2px;
+        bottom: -1px;
+        background-color: darkgrey;
+        -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+        -webkit-transition: .4s;
+        transition: all 0.4s ease-in-out;
+    }
+    .slider:after {
+        position: absolute;
+        left: 0;
+        z-index: 1;
+        content: "YES";
+        font-size: 45px;
+        text-align: left !important;
+        line-height: 51px;
+        padding-left: 0;
+        width: 130px;
+        color: #fff;
+        height: 50px;
+        border-radius: 100px;
+        background-color: #578dc9;
+        -webkit-transform: translateX(-160px);
+        -ms-transform: translateX(-160px);
+        transform: translateX(-160px);
+        transition: all 0.4s ease-in-out;
+    }
+    input:checked + .slider:after {
+        -webkit-transform: translateX(0px);
+        -ms-transform: translateX(0px);
+        transform: translateX(0px);
+        /*width: 235px;*/
+        padding-left: 25px;
+    }
+    input:checked + .slider:before {
+        background-color: #fff;
+    }
+    input:checked + .slider:before {
+        -webkit-transform: translateX(160px);
+        -ms-transform: translateX(160px);
+        transform: translateX(160px);
+    }
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 100px;
+    }
+    .slider.round:before {
+        border-radius: 50%;
+    }
+    .absolute-no {
+        position: absolute;
+        left: 0;
+        color: darkgrey;
+        text-align: right !important;
+        font-size: 40px;
+        width: calc(100% - 25px);
+        height: 84px;
+        line-height: 51px;
+        cursor: pointer;
+    }
+    /* div#collapseOne .card {
+         position: relative;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         margin: 0;
+         background-color: rgba(0, 0, 0, 0.3);
+     } */
 </style>
