@@ -243,7 +243,7 @@
                 <constraints foreignKeyName="FK_GAMIFICATION_RULES_DOMAIN" references="GAMIFICATION_DOMAIN(ID)" />
             </column>
         </addColumn>
-        <addColumn tableName="GAMIFICATION_BADGES">
+        <addColumn tableName="GAMIFICATION_BADGES">LeaderboardEndpoint
             <column name="DOMAIN_ID" type="BIGINT">
                 <constraints foreignKeyName="FK_GAMIFICATION_BADGES_DOMAIN" references="GAMIFICATION_DOMAIN(ID)" />
             </column>
