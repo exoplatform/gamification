@@ -69,6 +69,13 @@ public class RuleService {
 
     }
 
+
+
+    /**
+     * Get all Rules from DB
+     * @return RuleDTO list
+     */
+
     public List<RuleDTO> getAllRules() {
         try {
             //--- load all Rules
@@ -81,6 +88,53 @@ public class RuleService {
             LOG.error("Error to find Rules",e.getMessage());
         }
         return null;
+    }
+    /**
+     * Get all Rules by Domain from DB
+     * * @param domain : rule's domain param
+     * @return RuleDTO list
+     */
+    @ExoTransactional
+    public List<RuleDTO> getAllRulesByDomain(String domain) {
+        try {
+            //--- load all Rules by Domain
+            List<RuleEntity> rules =  ruleDAO.getAllRulesByDomain(domain);
+            if (rules != null) {
+                return ruleMapper.rulesToRoleDTOs(rules);
+            }
+
+        } catch (Exception e) {
+            LOG.error("Error to find Rules",e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Get all Rules by with null DomainDTO from DB
+     * @return RuleDTO list
+     */
+    @ExoTransactional
+    public List<RuleDTO> getAllRulesWithNullDomain() {
+        try {
+            List<RuleEntity> rules =  ruleDAO.getAllRulesWithNullDomain();
+            if (rules != null) {
+                return ruleMapper.rulesToRoleDTOs(rules);
+            }
+
+        } catch (Exception e) {
+            LOG.error("Error to find Rules",e.getMessage());
+        }
+        return null;
+    }
+
+
+    /**
+     * Get all Domains from Rules from DB
+     * @return String list
+     */
+    @ExoTransactional
+    public List<String> getDomainListFromRules() {
+        return ruleDAO.getDomainList();
     }
 
     @ExoTransactional

@@ -6,13 +6,17 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity(name = "Domain")
+@Entity(name = "GamificationDomain")
 @ExoEntity
 @Table(name = "GAMIFICATION_DOMAIN")
 @NamedQueries({
         @NamedQuery(
-                name = "Domain.getAllDomains",
-                query = "SELECT domain FROM Domain domain "
+                name = "GamificationDomain.getAllDomains",
+                query = "SELECT domain FROM GamificationDomain domain "
+        ),
+        @NamedQuery(
+                name = "GamificationDomain.findDomainByTitle",
+                query = "SELECT domain FROM GamificationDomain domain where domain.title = :domainTitle"
         )
 })
 public class DomainEntity extends AbstractAuditingEntity implements Serializable {
@@ -28,6 +32,9 @@ public class DomainEntity extends AbstractAuditingEntity implements Serializable
 
     @Column(name = "DESCRIPTION")
     protected String description;
+
+    @Column(name = "PRIORITY")
+    protected int priority;
 
 
     public DomainEntity() {
@@ -57,6 +64,13 @@ public class DomainEntity extends AbstractAuditingEntity implements Serializable
         this.description = description;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -5,10 +5,12 @@ import org.exoplatform.addons.gamification.entities.domain.configuration.DomainE
 import org.exoplatform.addons.gamification.entities.domain.configuration.RuleEntity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DomainDTO implements Serializable {
 
+    private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     protected Long id;
 
@@ -16,13 +18,15 @@ public class DomainDTO implements Serializable {
 
     protected String description;
 
+    protected int priority;
+
     private String createdBy;
 
-    private Date createdDate;
+    private String createdDate;
 
     private String lastModifiedBy;
 
-    private Date lastModifiedDate;
+    private String lastModifiedDate;
 
 
 
@@ -35,9 +39,13 @@ public class DomainDTO implements Serializable {
         this.title = domainEntity.getTitle();
         this.description = domainEntity.getDescription();
         this.createdBy = domainEntity.getCreatedBy();
-        this.createdDate = domainEntity.getCreatedDate();
-        this.lastModifiedBy = domainEntity.getLastModifiedBy();
-        this.lastModifiedDate = domainEntity.getLastModifiedDate();
+        this.priority = domainEntity.getPriority();
+        if (domainEntity.getCreatedDate() != null) {
+            this.createdDate = formatter.format(domainEntity.getCreatedDate());
+        }
+        if (domainEntity.getLastModifiedDate() != null) {
+            this.lastModifiedDate = formatter.format(domainEntity.getLastModifiedDate());
+        }
     }
 
     public Long getId() {
@@ -64,6 +72,14 @@ public class DomainDTO implements Serializable {
         this.description = description;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     public String getCreatedBy() {
         return createdBy;
     }
@@ -73,11 +89,11 @@ public class DomainDTO implements Serializable {
     }
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -90,11 +106,11 @@ public class DomainDTO implements Serializable {
     }
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    public Date getLastModifiedDate() {
+    public String getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
+    public void setLastModifiedDate(String lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 

@@ -1,7 +1,8 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
-const exoServerPath = "/home/exo/Documents/Myworkspace/server/plf/platform-5.2.0-RC02";
+const exoServerPath = "D:\\exo\\exo-working\\servers\\platform-5.3.0-M08";
+
 
 module.exports = merge(common, {
 
@@ -15,7 +16,6 @@ module.exports = merge(common, {
         leaderboard: "./leaderboard.js",
         GamificationInformations: "./GamificationInformations.js",
         spaceleaderboard: "./spaceleaderboard.js",
-
     },
     output: {
         path: path.resolve(__dirname, exoServerPath + '/webapps/gamification-portlets/javascript/'),

@@ -43,7 +43,7 @@ public class RuleDTO implements Serializable {
         this.description = rule.getDescription();
         this.score = rule.getScore();
         this.area = rule.getArea();
-        this.domainDTO = new DomainDTO(rule.getDomainEntity());
+        this.domainDTO = ((rule.getDomainEntity() == null) ? null : new DomainDTO(rule.getDomainEntity()));
         this.enabled = rule.isEnabled();
         this.createdBy = rule.getCreatedBy();
         this.createdDate = rule.getCreatedDate();
@@ -85,6 +85,7 @@ public class RuleDTO implements Serializable {
     }
 
     public String getArea() {
+        if(this.domainDTO!=null)return this.domainDTO.getTitle();
         return area;
     }
 

@@ -83,7 +83,7 @@ public class BadgeDTO implements Serializable {
 
         this.domain = badgeEntity.getDomain();
 
-        this.domainDTO = new DomainDTO(badgeEntity.getDomainEntity());
+        this.domainDTO = ((badgeEntity.getDomainEntity() == null) ? null : new DomainDTO(badgeEntity.getDomainEntity()));
 
         this.iconFileId = badgeEntity.getIconFileId();
 
@@ -204,6 +204,7 @@ public class BadgeDTO implements Serializable {
     }
 
     public String getDomain() {
+        if(this.domainDTO!=null) return this.domainDTO.getTitle();
         return domain;
     }
 

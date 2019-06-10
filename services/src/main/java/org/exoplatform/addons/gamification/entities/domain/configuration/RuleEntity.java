@@ -19,6 +19,14 @@ import java.util.Objects;
                 query = "SELECT rule FROM Rule rule where rule.isEnabled = :isEnabled "
         ),
         @NamedQuery(
+                name = "Rule.getAllRulesByDomain",
+                query = "SELECT rule FROM Rule rule where rule.area = :domain "
+        ),
+        @NamedQuery(
+                name = "Rule.getAllRulesWithNullDomain",
+                query = "SELECT rule FROM Rule rule where rule.domainEntity IS NULL "
+        ),
+        @NamedQuery(
                 name = "Rule.findEnabledRuleByTitle",
                 query = "SELECT rule FROM Rule rule where rule.title = :ruleTitle and rule.isEnabled = true"
         ),
@@ -28,7 +36,7 @@ import java.util.Objects;
         ),
         @NamedQuery(
                 name = "Rule.getDomainList",
-                query = "SELECT Rule.area  FROM Rule rule GROUP BY Rule.area"
+                query = "SELECT rule.area  FROM Rule rule GROUP BY rule.area"
         ),
         @NamedQuery(
                 name = "Rule.deleteRuleByTitle",

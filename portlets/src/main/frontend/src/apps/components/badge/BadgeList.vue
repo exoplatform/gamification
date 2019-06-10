@@ -22,7 +22,7 @@
                         <td class="badge-title-col">{{badge.title}}</td>
                         <td class="badge-desc-col">{{badge.description}}</td>
                         <td class="badge-needed-score-col">{{badge.neededScore}}</td>
-                        <td class="badge-domain-col">{{badge.domain}}</td>
+                        <td class="badge-domain-col">{{badge.domainDTO.title}}</td>
                         <td class="badge-icon-col"><b-img thumbnail fluid :src="`/rest/gamification/reputation/badge/${badge.title}/avatar`" alt="Thumbnail" class="m-1"  width="40" height="40"/></td>
                         <td class="badge-status-col">{{badge.enabled}}</td>
                         <td class="badge-created-date-col">{{badge.createdBy}}</td>
@@ -42,7 +42,6 @@
 
                 </table>
             </b-col>
-
         </b-row>
     </b-container>
 </template>

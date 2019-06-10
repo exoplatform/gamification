@@ -218,10 +218,11 @@
             <column autoIncrement="${autoIncrement}" name="ID" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="TITLE" type="BIGINT"/>
+            <column name="TITLE" type="VARCHAR(255)"/>
             <column name="DESCRIPTION" type="VARCHAR(255)">
                 <constraints nullable="false" unique="true"/>
             </column>
+            <column name="PRIORITY" type="INT"/>
             <column name="CREATED_BY" type="varchar(200)">
                 <constraints nullable="false"/>
             </column>
@@ -239,12 +240,17 @@
     <changeSet  author="exo-gamification" id="1.0.0-13">
         <addColumn tableName="GAMIFICATION_RULE">
             <column name="DOMAIN_ID" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="FK_GAMIFICATION_RULES_DOMAIN" references="GAMIFICATION_RULE(DOMAIN_ID)" />
+                <constraints foreignKeyName="FK_GAMIFICATION_RULES_DOMAIN" references="GAMIFICATION_DOMAIN(ID)" />
             </column>
         </addColumn>
-        <addColumn tableName="GAMIFICATION_BADGES">
+        <addColumn tableName="GAMIFICATION_BADGES">LeaderboardEndpoint
             <column name="DOMAIN_ID" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="FK_GAMIFICATION_BADGES_DOMAIN" references="GAMIFICATION_BADGES(DOMAIN_ID)" />
+                <constraints foreignKeyName="FK_GAMIFICATION_BADGES_DOMAIN" references="GAMIFICATION_DOMAIN(ID)" />
+            </column>
+        </addColumn>
+        <addColumn tableName="GAMIFICATION_ACTIONS_HISTORY">
+            <column name="DOMAIN_ID" type="BIGINT">
+                <constraints foreignKeyName="FK_GAMIFICATION_ACTIONS_HISTORY_DOMAIN" references="GAMIFICATION_DOMAIN(ID)" />
             </column>
         </addColumn>
     </changeSet>

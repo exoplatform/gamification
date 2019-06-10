@@ -58,7 +58,7 @@
                         </form-group>
 
                         <form-group id="domainSelectboxGroup">
-                            <select v-model="badge.domain" class="mb-4" required>
+<!--                            <select v-model="badge.domain" class="mb-4" required>
                                 <template slot="first">
 
                                     <option :value="null" disabled placeholder="Please select a domain"></option>
@@ -68,10 +68,12 @@
                                 <option value="Knowledge">Knowledge</option>
                                 <option value="Teamwork">Teamwork</option>
                                 <option value="Feedback">Feedback</option>
-
-                                <!--
-                                <option value="Content">Content</option>
-                                -->
+                            </select>-->
+                            <select v-model="badge.domainDTO" class="mb-4">
+                                <option :value="null" disabled>-- Please select an area --</option>
+                                <option v-for="option in domains" v-bind:value="option">
+                                    {{ option.title }}
+                                </option>
                             </select>
                             <b-alert v-if="formErrors.neededScore" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0"
                                      @dismiss-count-down="countDownChanged">
@@ -129,7 +131,8 @@
                     format: 'YYYY-MM-DD',
                     useCurrent: false,
                 },
-                dynamicRules: []
+                dynamicRules: [],
+                domains: []
             }
         },
 
@@ -191,7 +194,13 @@
         },
 
         created() {
-
+            axios.get(`/rest/gamification/api/v1/domains`)
+                .then(response => {
+                    this.domains = response.data;
+                })
+                .catch(e => {
+                    this.errors.push(e)
+                })
         }
 
 
