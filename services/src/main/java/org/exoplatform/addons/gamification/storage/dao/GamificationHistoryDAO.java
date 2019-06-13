@@ -459,6 +459,8 @@ public class GamificationHistoryDAO extends GenericDAOJPAImpl<GamificationAction
     }
 
 
+
+
   public long computeTotalScore(String actorIdentityId) {
     TypedQuery<Long> query =
                            getEntityManager().createNamedQuery("GamificationActionsHistory.computeTotalScore",
