@@ -31,13 +31,15 @@ public class GamificationRestEndpoint implements ResourceContainer {
     private final CacheControl cacheControl;
     private GamificationService gamificationService;
     private IdentityManager identityManager;
+    private DomainService domainService;
 
-    public GamificationRestEndpoint(GamificationService gamificationService, IdentityManager identityManager) {
+    public GamificationRestEndpoint(GamificationService gamificationService, IdentityManager identityManager, DomainService domainService) {
         this.cacheControl = new CacheControl();
         cacheControl.setNoCache(true);
         cacheControl.setNoStore(true);
         this.gamificationService = gamificationService;
         this.identityManager = identityManager;
+        this.domainService = domainService;
     }
 
     /**
@@ -152,13 +154,11 @@ public class GamificationRestEndpoint implements ResourceContainer {
     public Response getAllDomains() {
 
         try {
-            DomainService domainService = CommonsUtils.getService(DomainService.class);
-
             return Response.ok(domainService.getAllDomains()).build();
 
         } catch (Exception e) {
             LOG.error("Error while fetching All Domains", e);
-            return Response.ok("Error while fetching all domains").build();
+            return Response.serverError().entity("Error while fetching all domains").build();
         } finally {
 
         }
