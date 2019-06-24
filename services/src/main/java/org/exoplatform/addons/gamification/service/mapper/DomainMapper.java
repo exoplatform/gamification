@@ -7,11 +7,14 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import org.exoplatform.addons.gamification.entities.domain.configuration.DomainEntity;
 import org.exoplatform.addons.gamification.service.dto.configuration.DomainDTO;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 
 
 public class DomainMapper {
 
     private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    private static final Log LOG = ExoLogger.getLogger(DomainMapper.class);
 
     public DomainMapper() {
     }
@@ -27,7 +30,7 @@ public class DomainMapper {
                 .collect(Collectors.toList());
     }
     public DomainEntity domainDTOToDomain(DomainDTO domainDTO) {
-        try {
+
             if (domainDTO == null) {
                 return null;
             } else {
@@ -38,15 +41,14 @@ public class DomainMapper {
                 domain.setCreatedBy(domainDTO.getCreatedBy());
                 domain.setLastModifiedBy(domainDTO.getLastModifiedBy());
                 if (domainDTO.getLastModifiedDate() != null) {
+                    try {
                     domain.setLastModifiedDate(formatter.parse(domainDTO.getLastModifiedDate()));
+                    }catch (ParseException e) {
+                        LOG.warn("Connot parse domin {} last modified date", domain.getId());
+                    }
                 }
-
                 return domain;
-            }
-        } catch (ParseException e) {
-
         }
-        return null;
     }
 
     public List<DomainEntity> domainDTOsToDomains(List<DomainDTO> domainDTOs) {
