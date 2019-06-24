@@ -10,6 +10,10 @@ import org.exoplatform.commons.api.persistence.ExoTransactional;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
+
 public class DomainService {
 
     private static final Log LOG = ExoLogger.getLogger(DomainService.class);
@@ -27,19 +31,20 @@ public class DomainService {
      * Return all domains within the DB
      * @return a list of DomainDTO
      */
-    public List<DomainDTO> getAllDomains() {
+    public List<DomainDTO> getAllDomains() throws NoResultException{
         try {
             //--- load all Domains
             List<DomainEntity> badges = domainStorage.findAll();
             if (badges != null) {
                 return domainMapper.domainssToDomainDTOs(badges);
+            }else{
+                throw (new NoResultException());
             }
 
         } catch (Exception e) {
             LOG.error("Error to find Domains", e.getMessage());
+            throw (e);
         }
-        return null;
-
     }
 
     /**
@@ -48,7 +53,7 @@ public class DomainService {
      * @return an instance DomainDTO
      */
     @ExoTransactional
-    public DomainDTO findDomainByTitle(String domainTitle) {
+    public DomainDTO findDomainByTitle(String domainTitle) throws NoResultException {
 
         try {
             //--- Get Entity from DB
@@ -56,12 +61,14 @@ public class DomainService {
             //--- Convert Entity to DTO
             if (entity != null) {
                 return domainMapper.domainToDomainDTO(entity);
+            }else{
+                throw (new NoResultException());
             }
 
         } catch (Exception e) {
             LOG.error("Error to find Domain entity with title : {}", domainTitle, e.getMessage());
+            throw (e);
         }
-        return null;
 
     }
 
@@ -71,19 +78,17 @@ public class DomainService {
      * @return BadgeDTO object
      */
     @ExoTransactional
-    public DomainDTO addDomain (DomainDTO domainDTO) {
+    public DomainDTO addDomain (DomainDTO domainDTO) throws PersistenceException {
 
         DomainEntity domainEntity = null;
 
         try {
-
             domainEntity = domainStorage.create(domainMapper.domainDTOToDomain(domainDTO));
-
+            return domainMapper.domainToDomainDTO(domainEntity);
         } catch (Exception e) {
             LOG.error("Error to create badge with title {}", domainDTO.getTitle() , e);
+            throw(e);
         }
-
-        return domainMapper.domainToDomainDTO(domainEntity);
     }
 
     /**
@@ -92,19 +97,20 @@ public class DomainService {
      * @return DomainDTO object
      */
     @ExoTransactional
-    public DomainDTO updateBadge (DomainDTO domainDTO) {
+    public DomainDTO updateBadge (DomainDTO domainDTO) throws PersistenceException  {
 
         DomainEntity domainEntity = null;
 
         try {
-
             domainEntity = domainStorage.update(domainMapper.domainDTOToDomain(domainDTO));
+            return domainMapper.domainToDomainDTO(domainEntity);
 
         } catch (Exception e) {
-            LOG.error("Error to update with title {}", domainDTO.getTitle() , e);
+            LOG.error("Error to update domain {} with title {}", domainDTO.getId() , domainDTO.getTitle() , e);
+            throw (e);
         }
 
-        return domainMapper.domainToDomainDTO(domainEntity);
+
     }
 
     /**
@@ -112,19 +118,20 @@ public class DomainService {
      * @param id : domain id
      */
     @ExoTransactional
-    public void deleteDomain (Long id) {
+    public void deleteDomain (Long id) throws EntityNotFoundException{
 
         try {
             DomainEntity domainEntity = domainStorage.find(id);
             if(domainEntity!=null){
                 domainStorage.delete(domainEntity);
             }else{
-                LOG.warn("Domain with id {} not found ", id);
+                LOG.warn("Domain {} not Found",id);
+                throw(new EntityNotFoundException());
             }
 
-
         } catch (Exception e) {
-            LOG.error("Error to delete domain with id {}", id, e);
+            LOG.error("Error to delete domain {}", id, e);
+            throw (e);
         }
 
 

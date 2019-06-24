@@ -67,9 +67,7 @@ public class DomainMigrationService implements Startable {
                         if (rules != null && rules.size() > 0) {
                             for (RuleDTO rule : rules) {
                                 if (rule.getDomainDTO() == null) {
-                                    if (!entitiesToMigrate) {
-                                        entitiesToMigrate = true;
-                                    }
+                                    entitiesToMigrate = true;
                                     rule.setDomainDTO(domainDTO);
                                     ruleService.updateRule(rule);
                                 }
@@ -84,9 +82,7 @@ public class DomainMigrationService implements Startable {
                     for (RuleDTO rule : rules) {
                         DomainDTO domainDTO = domainService.findDomainByTitle(rule.getArea());
                         if (domainDTO != null) {
-                            if (!entitiesToMigrate) {
-                                entitiesToMigrate = true;
-                            }
+                            entitiesToMigrate = true;
                             rule.setDomainDTO(domainDTO);
                             ruleService.updateRule(rule);
                         }
@@ -115,9 +111,7 @@ public class DomainMigrationService implements Startable {
                         if (badges != null && badges.size() > 0) {
                             for (BadgeDTO badge : badges) {
                                 if (badge.getDomainDTO() == null) {
-                                    if (!entitiesToMigrate) {
-                                        entitiesToMigrate = true;
-                                    }
+                                    entitiesToMigrate = true;
                                     badge.setDomainDTO(domainDTO);
                                     badgeService.updateBadge(badge);
                                 }
@@ -132,9 +126,7 @@ public class DomainMigrationService implements Startable {
                     for (BadgeDTO badge : badges) {
                         DomainDTO domainDTO = domainService.findDomainByTitle(badge.getDomain());
                         if (domainDTO != null) {
-                            if (!entitiesToMigrate) {
-                                entitiesToMigrate = true;
-                            }
+                            entitiesToMigrate = true;
                             badge.setDomainDTO(domainDTO);
                             badgeService.updateBadge(badge);
                         }
@@ -164,9 +156,7 @@ public class DomainMigrationService implements Startable {
                         if (points != null && points.size() > 0) {
                             for (GamificationActionsHistory point : points) {
                                 if (point.getDomainEntity() == null) {
-                                    if (!entitiesToMigrate) {
-                                        entitiesToMigrate = true;
-                                    }
+                                    entitiesToMigrate = true;
                                     point.setDomainEntity(domainMapper.domainDTOToDomain(domainDTO));
                                     gamificationHistoryDAO.update(point);
                                 }
@@ -180,9 +170,7 @@ public class DomainMigrationService implements Startable {
                     for (GamificationActionsHistory point : points) {
                         DomainDTO domainDTO = domainService.findDomainByTitle(point.getDomain());
                         if (domainDTO != null) {
-                            if (!entitiesToMigrate) {
-                                entitiesToMigrate = true;
-                            }
+                            entitiesToMigrate = true;
                             point.setDomainEntity(domainMapper.domainDTOToDomain(domainDTO));
                             gamificationHistoryDAO.update(point);
                         }
