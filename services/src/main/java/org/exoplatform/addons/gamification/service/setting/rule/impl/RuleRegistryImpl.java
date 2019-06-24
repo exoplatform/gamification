@@ -87,20 +87,24 @@ public class RuleRegistryImpl implements Startable, RuleRegistry {
 
         domainService = CommonsUtils.getService(DomainService.class);
 
-        RuleDTO ruleDto = new RuleDTO();
+        try {
+            RuleDTO ruleDto = new RuleDTO();
 
-        ruleDto.setTitle(ruleConfig.getTitle());
-        ruleDto.setScore(ruleConfig.getScore());
-        ruleDto.setEnabled(ruleConfig.isEnable());
-        ruleDto.setLastModifiedDate(new Date());
-        ruleDto.setLastModifiedBy("Gamification");
-        ruleDto.setCreatedBy("Gamification");
-        ruleDto.setArea(ruleConfig.getZone());
-        ruleDto.setDomainDTO(domainService.findDomainByTitle(ruleConfig.getZone()));
-        ruleDto.setDescription(ruleConfig.getDescription());
-        ruleDto.setCreatedDate(new Date());
+            ruleDto.setTitle(ruleConfig.getTitle());
+            ruleDto.setScore(ruleConfig.getScore());
+            ruleDto.setEnabled(ruleConfig.isEnable());
+            ruleDto.setLastModifiedDate(new Date());
+            ruleDto.setLastModifiedBy("Gamification");
+            ruleDto.setCreatedBy("Gamification");
+            ruleDto.setArea(ruleConfig.getZone());
+            ruleDto.setDomainDTO(domainService.findDomainByTitle(ruleConfig.getZone()));
+            ruleDto.setDescription(ruleConfig.getDescription());
+            ruleDto.setCreatedDate(new Date());
 
-        CommonsUtils.getService(RuleService.class).addRule(ruleDto);
+            CommonsUtils.getService(RuleService.class).addRule(ruleDto);
+        } catch (Exception e) {
+            LOG.error("Error when saving Rule ", e);
+        }
 
     }
 
