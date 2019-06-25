@@ -1,5 +1,5 @@
 package org.exoplatform.addons.gamification.test;
-
+import org.exoplatform.addons.gamification.service.effective.GamificationService;
 import org.exoplatform.commons.persistence.impl.EntityManagerService;
 import org.exoplatform.commons.testing.BaseExoTestCase;
 import org.exoplatform.commons.utils.CommonsUtils;
@@ -31,6 +31,9 @@ public class AbstractServiceTest extends BaseExoTestCase {
     protected RelationshipManager relationshipManager;
     protected ActivityManager activityManager;
     protected EntityManagerService entityManagerService;
+    protected GamificationService gamificationService;
+
+
     @Override
     protected void setUp() throws Exception {
         begin();
@@ -45,6 +48,8 @@ public class AbstractServiceTest extends BaseExoTestCase {
         identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, "john", true);
         identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, "mary", true);
         identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, "demo", true);
+        gamificationService = CommonsUtils.getService(GamificationService.class);
+
     }
 
 

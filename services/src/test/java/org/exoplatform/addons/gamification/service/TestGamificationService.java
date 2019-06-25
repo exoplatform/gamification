@@ -1,91 +1,49 @@
 package org.exoplatform.addons.gamification.service;
-import com.sun.istack.Nullable;
-import org.exoplatform.commons.testing.BaseExoTestCase;
-import org.apache.commons.lang3.StringUtils;
-import org.exoplatform.addons.gamification.GamificationUtils;
 import org.exoplatform.addons.gamification.entities.domain.effective.GamificationActionsHistory;
 import org.exoplatform.addons.gamification.service.effective.GamificationService;
 import org.exoplatform.addons.gamification.storage.dao.GamificationHistoryDAO;
 import org.exoplatform.addons.gamification.test.AbstractServiceTest;
-import org.exoplatform.commons.utils.CommonsUtils;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
 import org.exoplatform.addons.gamification.service.dto.configuration.RuleDTO;
-import org.junit.Before;
 import org.exoplatform.social.core.identity.model.Identity;
-import org.junit.Test;
-
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 public class TestGamificationService extends AbstractServiceTest {
-    /*Gamification domain such us (Social, Knowledge, Teamwork ,Knowledge....)*/
-    private static final String GAMIFICATION_DOMAIN     ="TeamWork";
+    private static final String GAMIFICATION_DOMAIN  ="TeamWork";
     private static final String RULE_NAME      ="Update a new Task";
     /*Receiver */
     private static final String TEST_USER_RECEIVER = "55";
     /*Sender */
     private static final String TEST_USER_SENDER = "1";
     /*Link to the activity stream */
-    private static final String TEST_LINK_ACTIVITY = "/activity?id=245590";
+    private static final String TEST_LINK_ACTIVITY = "/portal/intranet//activity?id=245590";
 
     private static final String TEST_GLOBAL_SCORE = "245590";
+    private GamificationHistoryDAO gamificationHistoryDAO;
 
+//    private Identity actorIdentity = identityManager.getIdentity(TEST_USER_SENDER, false);
 
+    private static final Log LOG = ExoLogger.getLogger(GamificationService.class);
+    private RuleDTO ruleDTO= new RuleDTO();
 
-    List<RuleDTO> ruleDTOList = new ArrayList<RuleDTO>();
-    GamificationService gamificationService;
-    GamificationHistoryDAO gamificationHistoryDAO;
+    // Needed for exchange points between users
+    Identity testUserReceiver = new Identity(TEST_USER_RECEIVER);
+    Identity testUserSender = new Identity(TEST_USER_SENDER);
 
-
-
-    @Before
-    public void setUp() throws Exception {
-
-        super.setUp();
-
-        gamificationService = CommonsUtils.getService(GamificationService.class);
-
-        // Needed for exchange points between users
-        Identity testUserReceiver = new Identity(TEST_USER_RECEIVER);
-        Identity testUserSender = new Identity(TEST_USER_SENDER);
-
-
-    }
-    public GamificationActionsHistory build(RuleDTO ruleDto, String testUserSender, String testUserReceiver, String objectId) throws Exception{
-
-        org.exoplatform.social.core.identity.model.Identity actorIdentity = identityManager.getIdentity(testUserSender, false);
+    public GamificationActionsHistory build(RuleDTO ruleDto, String testUserSender, String testUserReceiver, String TEST_LINK_ACTIVITY) throws Exception{
 
         GamificationActionsHistory aHistory = null;
-        // check if the current user is not a bot
-        actorIdentity = identityManager.getIdentity(actorIdentity.getId(), false);
-        if (actorIdentity == null || StringUtils.isBlank(( ((org.exoplatform.social.core.identity.model.Identity) actorIdentity).getRemoteId())) ){
-            fail("Actor {} has earned some points but doesn't have a social identity");
-            return null;
-        }
-        if (actorIdentity.isDeleted()) {
-            fail("Actor {} has earned some points but is marked as deleted");
-            return null;
-        }
-        if (!actorIdentity.isEnable()) {
-            fail("Actor {} has earned some points but is marked as disabled");
-            return null;
-
-        }
-        String actorRemoteId = actorIdentity.getRemoteId();
-        if (GamificationUtils.isBlackListed(actorRemoteId)) {
-            fail("Actor {} has earned some points but is marked as blacklisted");
-            return null;
-        }
-
-        // Buil only an entry when a rule enable and exist
+try{
+        // Build only an entry when a rule enable and exist
         if (ruleDto != null) {
             aHistory = new GamificationActionsHistory();
             aHistory.setActionScore(ruleDto.getScore());
             try {
-                aHistory.setGlobalScore(computeTotalScore(testUserSender) + ruleDto.getScore());
+                aHistory.setGlobalScore( TestcomputeTotalScore(testUserSender) + ruleDto.getScore());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -101,48 +59,57 @@ public class TestGamificationService extends AbstractServiceTest {
             aHistory.setLastModifiedBy("Gamification Inner Process");
             // Set create metadata
             aHistory.setCreatedBy("Gamification Inner Process");
-
-        }
+        }}
+catch (Exception e) {
+    LOG.error("Error to run GamificationActionsHistory build {}", aHistory, e);        }
         return aHistory;
-
-
-
     }
 
     public void testSaveActionHistory() {
         GamificationActionsHistory aHistory = null;
 
         try {
+            if (aHistory !=null){
 
-            if (aHistory != null) {
+                assertNotNull(aHistory);
+                gamificationService.build(ruleDTO,TEST_USER_SENDER,TEST_USER_RECEIVER,TEST_LINK_ACTIVITY);
                 gamificationService.saveActionHistory(aHistory);
+
             }
 
 
         } catch (Exception e) {
-        fail("Error to save an actionHistory entry ",e);
-        }
+            LOG.error("Error to save the following GamificationActionsHistory entry {}", aHistory, e);        }
 
     }
 
 
     //Needed for the computed score
 
-    public long computeTotalScore(String actorIdentity) throws Exception{
-        return gamificationHistoryDAO.computeTotalScore(actorIdentity);
+    public long TestcomputeTotalScore(String testUserSender) throws Exception{
+        try {
+             gamificationHistoryDAO.computeTotalScore(testUserSender);
+        }
+        catch (Exception e) {
+            LOG.error("Error in user total score {}",testUserSender , e);        }
+        return gamificationHistoryDAO.computeTotalScore(testUserSender);
+
     }
 
 
 
     public void testAddActivityOnUserStream() throws Exception {
-        Identity maryIdentity = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, "mary", false);
+
+        try{
+        Identity maryIdentity = identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, "mary", false);}
+        catch (Exception e) {
+            LOG.error("Error in add activity {}", e);        }
 
     }
 
 
 
-
-    public GamificationActionsHistory FindLatestActionHistoryBySocialId(String actorIdentity) {
+    public GamificationActionsHistory FindLatestActionHistoryBySocialId(String TEST_USER_SENDER)throws Exception {
         List<GamificationActionsHistory>  aHistory = null;
 
         try {
@@ -150,7 +117,7 @@ public class TestGamificationService extends AbstractServiceTest {
 
 
 
-                aHistory=   gamificationHistoryDAO.findActionsHistoryByUserId(actorIdentity);
+                aHistory=   gamificationHistoryDAO.findActionsHistoryByUserId(TEST_USER_SENDER);
                 return (aHistory != null && !aHistory.isEmpty()) ? aHistory.get(0) : null;
 
 
@@ -174,6 +141,19 @@ public class TestGamificationService extends AbstractServiceTest {
                 gamificationService.findLatestActionHistoryBySocialId(TEST_USER_RECEIVER);
                 gamificationService.findLatestActionHistoryBySocialId(TEST_USER_SENDER);
 
+
+                assertTrue((aHistory.size() == 1));
+                GamificationActionsHistory result = aHistory.iterator().next();
+                assertEquals(TEST_USER_SENDER,result.getUserSocialId());
+                assertEquals("updateTask",result.getActionTitle());
+                assertEquals("TeamWork",result.getDomain());
+                assertEquals("/portal/intranet/activity?id=245590",result.getObjectId());
+                assertEquals(TEST_GLOBAL_SCORE,result.getGlobalScore());
+                assertEquals(TEST_USER_RECEIVER,result.getReceiver());
+
+
+
+
             }
 
 
@@ -183,16 +163,41 @@ public class TestGamificationService extends AbstractServiceTest {
 
     }
 
-    public void testFindUserReputationBySocialId() {
+
+    public void testbuild(RuleDTO ruleDto, String testUserSender, String testUserReceiver, String TEST_LINK_ACTIVITY) throws Exception{
+
+        GamificationActionsHistory aHistory = null;
+try{
+        // Build only an entry when a rule enable and exist
+        if (ruleDto != null) {
+            aHistory = new GamificationActionsHistory();
+            aHistory.setActionScore(ruleDto.getScore());
+            try {
+                aHistory.setGlobalScore( TestcomputeTotalScore(testUserSender) + ruleDto.getScore());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            aHistory.setDate(new Date());
+            aHistory.setUserSocialId(testUserSender);
+
+            aHistory.setActionTitle(RULE_NAME);
+            aHistory.setDomain(GAMIFICATION_DOMAIN);
+            aHistory.setReceiver(testUserReceiver);
+            aHistory.setObjectId(TEST_LINK_ACTIVITY);
+            // Set update metadata
+            aHistory.setLastModifiedDate(new Date());
+            aHistory.setLastModifiedBy("Gamification Inner Process");
+            // Set create metadata
+            aHistory.setCreatedBy("Gamification Inner Process");
+        }} catch (Exception e) {
+    fail("Error to test an actionHistory entry ",e);
+}
+
+
+
     }
 
-    public void testBuildDomainScoreByUserId() {
-    }
 
-    public void testFindActionsHistoryByReceiverId() {
-    }
 
-    public void testComputeTotalScore() {
-    }
 
 }
