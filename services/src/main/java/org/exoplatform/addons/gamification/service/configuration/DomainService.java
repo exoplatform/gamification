@@ -42,7 +42,7 @@ public class DomainService {
             }
 
         } catch (Exception e) {
-            LOG.error("Error to find Domains", e.getMessage());
+            LOG.error("Error to find Domains", e);
             throw (e);
         }
     }
@@ -66,7 +66,7 @@ public class DomainService {
             }
 
         } catch (Exception e) {
-            LOG.error("Error to find Domain entity with title : {}", domainTitle, e.getMessage());
+            LOG.error("Error to find Domain entity with title : {}", domainTitle, e);
             throw (e);
         }
 
