@@ -168,7 +168,7 @@ public class BadgeService {
      * @return RuleDTO list
      */
     @ExoTransactional
-    public List<BadgeDTO> getAllBadgesWithNullDomain() {
+    public List<BadgeDTO> getAllBadgesWithNullDomain() throws Exception{
         try {
             List<BadgeEntity> rules =  badgeStorage.getAllBadgesWithNullDomain();
             if (rules != null) {
@@ -177,6 +177,7 @@ public class BadgeService {
 
         } catch (Exception e) {
             LOG.error("Error to find Rules",e.getMessage());
+            throw (e);
         }
         return null;
     }

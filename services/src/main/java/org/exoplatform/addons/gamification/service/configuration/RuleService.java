@@ -44,10 +44,9 @@ public class RuleService {
             }
 
         } catch (Exception e) {
-            LOG.error("Error to find enable Rule entity with title : {}",ruleTitle,e.getMessage());
+            LOG.error("Error to find enable Rule entity with title : {}",ruleTitle,e);
+            throw e;
         }
-        return null;
-
     }
 
     /**
@@ -69,7 +68,7 @@ public class RuleService {
             }
 
         } catch (Exception e) {
-            LOG.error("Error to find Rule entity with title : {}",ruleTitle,e.getMessage());
+            LOG.error("Error to find Rule entity with title : {}",ruleTitle,e);
             throw(e);
         }
     }
@@ -92,7 +91,7 @@ public class RuleService {
             }
 
         } catch (Exception e) {
-            LOG.error("Error to find Rules",e.getMessage());
+            LOG.error("Error to find Rules",e);
             throw(e);
         }
     }
@@ -112,7 +111,7 @@ public class RuleService {
                 throw (new NoResultException());
             }
         } catch (Exception e) {
-            LOG.error("Error to find Rules",e.getMessage());
+            LOG.error("Error to find Rules",e);
             throw(e);
         }
     }

@@ -140,7 +140,7 @@ public class DomainMigrationService implements Startable {
                 }
                 badgesMigrationDone=true;
             } catch (Exception e) {
-                LOG.error("Error when migration Rules ", e);
+                LOG.error("Error when migration badges ", e);
             }
 
 
@@ -189,7 +189,7 @@ public class DomainMigrationService implements Startable {
             if(badgesMigrationDone && rulesmigrationDone && pointsMigrationDone){
                 setDataversion(DOMAIN_MIGRATION_DATA_VERSION);
                 long endTime = System.currentTimeMillis();
-                LOG.info("=== Domain Migration done in " + (endTime - glStartTime) + " ms");
+                LOG.info("=== Domains Migration done in " + (endTime - glStartTime) + " ms");
             }
         }
     }
