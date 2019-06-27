@@ -29,25 +29,26 @@ public class DomainMapper {
                 .map((DomainEntity domain) -> domainToDomainDTO(domain))
                 .collect(Collectors.toList());
     }
+
     public DomainEntity domainDTOToDomain(DomainDTO domainDTO) {
 
-            if (domainDTO == null) {
-                return null;
-            } else {
-                DomainEntity domain = new DomainEntity();
-                domain.setId(domainDTO.getId());
-                domain.setTitle(domainDTO.getTitle());
-                domain.setDescription(domainDTO.getDescription());
-                domain.setCreatedBy(domainDTO.getCreatedBy());
-                domain.setLastModifiedBy(domainDTO.getLastModifiedBy());
-                if (domainDTO.getLastModifiedDate() != null) {
-                    try {
+        if (domainDTO == null) {
+            return null;
+        } else {
+            DomainEntity domain = new DomainEntity();
+            domain.setId(domainDTO.getId());
+            domain.setTitle(domainDTO.getTitle());
+            domain.setDescription(domainDTO.getDescription());
+            domain.setCreatedBy(domainDTO.getCreatedBy());
+            domain.setLastModifiedBy(domainDTO.getLastModifiedBy());
+            if (domainDTO.getLastModifiedDate() != null) {
+                try {
                     domain.setLastModifiedDate(formatter.parse(domainDTO.getLastModifiedDate()));
-                    }catch (ParseException e) {
-                        LOG.warn("Connot parse domin {} last modified date", domain.getId());
-                    }
+                } catch (ParseException e) {
+                    LOG.warn("Cannot parse the domain {} last modified date", domain.getId(), e);
                 }
-                return domain;
+            }
+            return domain;
         }
     }
 
