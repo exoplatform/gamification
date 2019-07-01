@@ -176,7 +176,7 @@ public class BadgeService {
             }
 
         } catch (Exception e) {
-            LOG.error("Error to find Rules",e.getMessage());
+            LOG.error("Error to find Badges",e);
             throw (e);
         }
         return null;

@@ -131,7 +131,7 @@ public class RuleService {
             }
 
         } catch (Exception e) {
-            LOG.error("Error to find Rules",e.getMessage());
+            LOG.error("Error to find Rules",e);
             throw(e);
         }
     }
