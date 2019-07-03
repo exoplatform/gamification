@@ -1,5 +1,6 @@
 package org.exoplatform.addons.gamification.test;
 
+import org.exoplatform.addons.gamification.rest.ManageBadgesEndpoint;
 import org.exoplatform.addons.gamification.service.effective.GamificationService;
 import org.exoplatform.commons.persistence.impl.EntityManagerService;
 import org.exoplatform.commons.testing.BaseExoTestCase;
@@ -14,29 +15,31 @@ import org.exoplatform.social.core.manager.RelationshipManager;
 import org.exoplatform.social.core.space.spi.SpaceService;
 
 @ConfiguredBy({
-    @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/exo.gamification.component.core.test.configuration.xml"),
+        @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/exo.gamification.component.core.test.configuration.xml"),
 
-    @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.portal-configuration.xml"),
-    @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.identity-configuration.xml"),
-    @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.test.jcr-configuration.xml"),
-    @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/exo.gamification.test.portal-configuration.xml"),
-    @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/exo.gamification.test.jcr-configuration.xml"),
-    @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/exo.XXXXXXgamification.component.core.test.application.registry.configuration.xml"),
-    @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/component.search.configuration.xml"),
-    @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/gamification-test-configuration.xml") })
+        @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.portal-configuration.xml"),
+        @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.identity-configuration.xml"),
+        @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.test.jcr-configuration.xml"),
+        @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/exo.gamification.test.portal-configuration.xml"),
+        @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/exo.gamification.test.jcr-configuration.xml"),
+        @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/exo.XXXXXXgamification.component.core.test.application.registry.configuration.xml"),
+        @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/component.search.configuration.xml"),
+        @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/gamification-test-configuration.xml")})
 public class AbstractServiceTest extends BaseExoTestCase {
 
-  protected SpaceService         spaceService;
+  protected SpaceService spaceService;
 
-  protected IdentityManager      identityManager;
+  protected IdentityManager identityManager;
 
-  protected RelationshipManager  relationshipManager;
+  protected RelationshipManager relationshipManager;
 
-  protected ActivityManager      activityManager;
+  protected ActivityManager activityManager;
 
   protected EntityManagerService entityManagerService;
 
-  protected GamificationService  gamificationService;
+  protected GamificationService gamificationService;
+
+  protected ManageBadgesEndpoint manageBadgesEndpoint;
 
   @Override
   protected void setUp() throws Exception {
@@ -53,6 +56,7 @@ public class AbstractServiceTest extends BaseExoTestCase {
     identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, "mary", true);
     identityManager.getOrCreateIdentity(OrganizationIdentityProvider.NAME, "demo", true);
     gamificationService = CommonsUtils.getService(GamificationService.class);
+    manageBadgesEndpoint = CommonsUtils.getService(ManageBadgesEndpoint.class);
 
   }
 
