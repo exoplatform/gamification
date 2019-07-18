@@ -142,12 +142,46 @@ public class TestManageBadgesEndpoint extends AbstractServiceTest {
   public void testdeletebadge() {
     try {
       startSessionAs("root");
+      Map<String, Object> ssResults = new HashMap<String, Object>();
+      getContainer().registerComponentInstance("ManageBadgesEndpoint", ManageBadgesEndpoint.class);
+      String restPath = "/gamification/badges/delete";
+      EnvironmentContext envctx = new EnvironmentContext();
+      registry(getComponentClass());
 
-      populateData();
+      HttpServletRequest httpRequest = new MockHttpServletRequest(restPath, null, 0, "DELETE", null);
+      envctx.put(HttpServletRequest.class, httpRequest);
+      envctx.put(SecurityContext.class, new MockSecurityContext("root"));
 
+      StringWriter writer = new StringWriter();
+      JSONWriter jsonWriter = new JSONWriter(writer);
+      jsonWriter.object()
+              .key("title")
+              .value("foo")
+              .key("description")
+              .value("description")
+              .key("domain")
+              .value("social")
+              .endObject();
+
+      byte[] data = writer.getBuffer().toString().getBytes("UTF-8");
+
+      MultivaluedMap<String, String> h = new MultivaluedMapImpl();
+      h.putSingle("content-type", "application/json");
+      h.putSingle("content-length", "" + data.length);
+      ContainerResponse response = launcher.service("DELETE", restPath, "", h, data, envctx);
+      assertNotNull(response);
+
+      assertEquals(200, response.getStatus());
+
+      BadgeDTO entity = (BadgeDTO) response.getEntity();
+      assertEquals("foo", entity.getTitle());
+      assertEquals("description", entity.getDescription());
+      assertEquals("social", entity.getDomain());
+
+      LOG.info("Delete of badges is OK ", BadgeEntity.class, response.getStatus());
     } catch (Exception e) {
 
-      LOG.error("Connet delete the list of badges", e);
+      LOG.error("Connot delete the list of badges", e);
     }
 
   }
@@ -162,7 +196,7 @@ public class TestManageBadgesEndpoint extends AbstractServiceTest {
       startSessionAs("root");
       Map<String, Object> ssResults = new HashMap<String, Object>();
       getContainer().registerComponentInstance("ManageBadgesEndpoint", ManageBadgesEndpoint.class);
-      String restPath = "/gamification/badges/add";
+      String restPath = "/gamification/badges/update";
       EnvironmentContext envctx = new EnvironmentContext();
       HttpServletRequest httpRequest = new MockHttpServletRequest(restPath, null, 0, HTTPMethods.PUT.toString(), null);
       envctx.put(HttpServletRequest.class, httpRequest);
