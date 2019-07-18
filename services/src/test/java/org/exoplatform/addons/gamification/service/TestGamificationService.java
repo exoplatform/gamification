@@ -199,3 +199,4 @@ public class TestGamificationService extends AbstractServiceTest {
   }
 
 }
+

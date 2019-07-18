@@ -55,8 +55,8 @@ import org.exoplatform.ws.frameworks.json.impl.JsonException;
 import org.exoplatform.ws.frameworks.json.impl.JsonGeneratorImpl;
 import org.exoplatform.ws.frameworks.json.impl.JsonParserImpl;
 import org.exoplatform.ws.frameworks.json.value.JsonValue;
-
 @ConfiguredBy({
+
 
     @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.portal-configuration.xml"),
     @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/exo.portal.component.identity-configuration.xml"),
@@ -65,8 +65,10 @@ import org.exoplatform.ws.frameworks.json.value.JsonValue;
     @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/exo.gamification.test.jcr-configuration.xml"),
     @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/exo.XXXXXXgamification.component.core.test.application.registry.configuration.xml"),
     @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/component.search.configuration.xml"),
+
     @ConfigurationUnit(scope = ContainerScope.ROOT, path = "conf/portal/test-db-configuration.xml"),
     @ConfigurationUnit(scope = ContainerScope.PORTAL, path = "conf/standalone/gamification-test-configuration.xml") })
+
 
 public abstract class AbstractServiceTest extends BaseExoTestCase {
 
