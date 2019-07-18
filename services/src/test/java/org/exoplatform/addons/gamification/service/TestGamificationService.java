@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.exoplatform.addons.gamification.entities.domain.effective.GamificationActionsHistory;
+import org.exoplatform.addons.gamification.rest.ManageBadgesEndpoint;
 import org.exoplatform.addons.gamification.service.dto.configuration.RuleDTO;
 import org.exoplatform.addons.gamification.service.effective.GamificationService;
 import org.exoplatform.addons.gamification.storage.dao.GamificationHistoryDAO;
@@ -14,6 +15,10 @@ import org.exoplatform.social.core.identity.model.Identity;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
 
 public class TestGamificationService extends AbstractServiceTest {
+
+  protected Class<?> getComponentClass() {
+    return GamificationService.class;
+  }
   private static final String    GAMIFICATION_DOMAIN = "TeamWork";
 
   private static final String    RULE_NAME           = "Update a new Task";
