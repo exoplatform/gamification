@@ -76,7 +76,7 @@ public class TestManageBadgesEndpoint extends AbstractServiceTest {
 
       LOG.info("List of badges is OK ", BadgeEntity.class, response.getStatus());
     } catch (Exception e) {
-      LOG.error("Connet get list of badges", e);
+      LOG.error("Connot get list of badges", e);
     }
 
   }
@@ -87,7 +87,7 @@ public class TestManageBadgesEndpoint extends AbstractServiceTest {
    * Testing the add of a new badge with the Media Type
    **/
   @Test
-  public void testaddbadge() {
+  public void testAddBadge() {
 
     try {
       startSessionAs("root");
@@ -130,7 +130,7 @@ public class TestManageBadgesEndpoint extends AbstractServiceTest {
       LOG.info("List of badges is OK ", BadgeEntity.class, response.getStatus());
     } catch (Exception e) {
 
-      LOG.error("Connet get list of badges", e);
+      LOG.error("Connot get list of badges", e);
     }
 
   }
@@ -139,7 +139,7 @@ public class TestManageBadgesEndpoint extends AbstractServiceTest {
    * Testing the add of delete of badge with the Media Type
    **/
   @Test
-  public void testdeletebadge() {
+  public void testDeleteBadge() {
     try {
       startSessionAs("root");
       Map<String, Object> ssResults = new HashMap<String, Object>();
@@ -190,7 +190,7 @@ public class TestManageBadgesEndpoint extends AbstractServiceTest {
    * Testing the add of delete of badge with the Media Type
    **/
   @Test
-  public void testupdatebadge() {
+  public void testUpdateBadge() {
 
     try {
       startSessionAs("root");
