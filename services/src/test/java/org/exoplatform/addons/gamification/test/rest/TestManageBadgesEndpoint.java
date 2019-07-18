@@ -76,7 +76,7 @@ public class TestManageBadgesEndpoint extends AbstractServiceTest {
 
       LOG.info("List of badges is OK ", BadgeEntity.class, response.getStatus());
     } catch (Exception e) {
-      LOG.error("Connot get list of badges", e);
+      LOG.error("Cannot get list of badges", e);
     }
 
   }
@@ -130,7 +130,7 @@ public class TestManageBadgesEndpoint extends AbstractServiceTest {
       LOG.info("List of badges is OK ", BadgeEntity.class, response.getStatus());
     } catch (Exception e) {
 
-      LOG.error("Connot get list of badges", e);
+      LOG.error("Cannot get list of badges", e);
     }
 
   }
@@ -181,7 +181,7 @@ public class TestManageBadgesEndpoint extends AbstractServiceTest {
       LOG.info("Delete of badges is OK ", BadgeEntity.class, response.getStatus());
     } catch (Exception e) {
 
-      LOG.error("Connot delete the list of badges", e);
+      LOG.error("Cannot delete the list of badges", e);
     }
 
   }
@@ -231,7 +231,7 @@ public class TestManageBadgesEndpoint extends AbstractServiceTest {
       LOG.info("List of badges is OK ", BadgeEntity.class, response.getStatus());
     } catch (Exception e) {
 
-      LOG.error("Connot get list of badges", e);
+      LOG.error("Cannot get list of badges", e);
     }
 
   }
