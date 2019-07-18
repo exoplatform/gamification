@@ -14,7 +14,12 @@ import org.exoplatform.social.core.identity.model.Identity;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
 
 public class TestGamificationService extends AbstractServiceTest {
-  TestGamificationService
+    private static final Log LOG = ExoLogger.getLogger(ManageBadgesEndpoint.class);
+
+  protected Class<?> getComponentClass() {
+    return ManageBadgesEndpoint.class;
+  }
+
   private static final String    GAMIFICATION_DOMAIN = "TeamWork";
 
   private static final String    RULE_NAME           = "Update a new Task";
