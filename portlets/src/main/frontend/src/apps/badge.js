@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import BadgeApp from './components/BadgeApp.vue'
 
 new Vue({
