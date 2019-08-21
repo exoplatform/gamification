@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import GamificationInformationsApp from './components/GamificationInformationsApp.vue'
 
 
