@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import ReputationApp from './components/ReputationApp.vue'
 
 new Vue({
