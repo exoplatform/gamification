@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import EarnPointsApp from './components/EarnPointsApp.vue'
 
 new Vue({
