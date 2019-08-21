@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import RuleApp from './components/RuleApp.vue'
 
 new Vue({
