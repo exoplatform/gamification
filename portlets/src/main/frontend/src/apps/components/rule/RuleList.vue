@@ -481,8 +481,8 @@
     }
 
     .alert-success {
-        position: fixed;
-        top: 22% !important;
+        position: absolute;
+        top: 11% !important;
         margin: auto 0.5% !important;
     }
 </style>
