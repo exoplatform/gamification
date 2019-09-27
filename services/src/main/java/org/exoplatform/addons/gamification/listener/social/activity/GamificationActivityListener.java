@@ -96,7 +96,7 @@ public class GamificationActivityListener extends ActivityListenerPlugin {
 
                 // Each user who get a new activity on his stream will be rewarded
 
-                gamificationService.createHistory(GAMIFICATION_SOCIAL_ADD_ACTIVITY_NETWORK_STREAM,activity.getPosterId(),activity.getStreamId(),"/portal/intranet/activity?id=" + activity.getId());
+                gamificationService.createHistory(GAMIFICATION_SOCIAL_ADD_ACTIVITY_NETWORK_STREAM,activity.getPosterId(),activity.getPosterId(),"/portal/intranet/activity?id=" + activity.getId());
 
 
                 if((!activity.getType().equalsIgnoreCase("DOC_ACTIVITY"))){                                                                                 ;
@@ -126,23 +126,25 @@ public class GamificationActivityListener extends ActivityListenerPlugin {
          *  Case 3 : Assign XP to user who made a comment on his own stream : NO
          */
 
-        GamificationActionsHistory aHistory = null;
-
-        // To hold GamificationRule
-        RuleDTO ruleDto = null;
-
         // Get ActivityStream
         ExoSocialActivity parent = activityManager.getParentActivity(activity);
 
         if (activity.getPosterId().equalsIgnoreCase(activity.getStreamId())) return;
 
-        if ((parent != null) && !parent.getType().equals("SPACE_ACTIVITY")) {
+        if (parent != null) {
 
+         if(!parent.getType().equals("SPACE_ACTIVITY")){
             gamificationService.createHistory(GAMIFICATION_SOCIAL_COMMENT_NETWORK_STREAM, activity.getPosterId(),parent.getPosterId(),"/portal/intranet/activity?id="+parent.getId()+"#comment-"+ ((ExoSocialActivityImpl) activity).getId());
 
             gamificationService.createHistory(GAMIFICATION_SOCIAL_COMMENT_ADD,activity.getPosterId(),activity.getPosterId(),"/portal/intranet/activity?id="+parent.getId()+"#comment-"+ ((ExoSocialActivityImpl) activity).getId());
 
-        }
+        } else{
+           gamificationService.createHistory(GAMIFICATION_SOCIAL_COMMENT_SPACE_STREAM,activity.getPosterId(),parent.getPosterId(),"/portal/intranet/activity?id="+parent.getId()+"#comment-"+ ((ExoSocialActivityImpl) activity).getId());
+
+           gamificationService.createHistory(GAMIFICATION_SOCIAL_COMMENT_ADD,activity.getPosterId(),activity.getPosterId(),"/portal/intranet/activity?id="+parent.getId()+"#comment-"+ ((ExoSocialActivityImpl) activity).getId());
+
+            }
+}
 
     }
 
