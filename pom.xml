@@ -59,7 +59,7 @@
         <!-- Dependencies versions                    -->
         <!-- **************************************** -->
         <org.exoplatform.depmgt.version>13</org.exoplatform.depmgt.version>
-        <org.exoplatform.platform.version>6.0.x-SNAPSHOT</org.exoplatform.platform.version>
+        <org.exoplatform.platform.version>6.0.0-M05</org.exoplatform.platform.version>
         <!-- for tests -->
         <junit.version>4.12</junit.version>
         <!-- Liquibase stack -->
@@ -72,7 +72,7 @@
         <!-- Juzu Version -->
         <org.juzu.version>1.2.0</org.juzu.version>
         <!-- Task Version -->
-        <addon.exo.tasks.version>3.0.x-SNAPSHOT</addon.exo.tasks.version>
+        <addon.exo.tasks.version>3.0.0-M05</addon.exo.tasks.version>
         <!-- Lombok driver-->
         <lombok.version>1.16.22</lombok.version>
         <!-- Maven Plugin for JS and CSS bundling and Unit Test execution -->
