@@ -43,16 +43,7 @@
                                        type="text"
                                        v-model="editedbadge.title">
                                 </input>
-
-
-                                <div :show="dismissCountDown" @dismiss-count-down="countDownChanged"
-                                     @dismissed="dismissCountdown=0"
-                                     class="require-msg" dismissible v-if="formErrors.title"
-                                     variant="danger">
-                                    {{ this.$t('exoplatform.gamification.Badgetitle',"Badge Title is required please enter a value")}} {{dismissCountDown}}
-                                </div>
                             </form>
-
                             <div id="descriptionInputGroup">
                                 <label class="pt-0" id="descriptionInput">{{
                                     this.$t('exoplatform.gamification.gamificationinformation.domain.Description',"Description")
@@ -61,20 +52,12 @@
                                           id="badgeDescription" placeholder="Enter description"
                                           v-model="editedbadge.description">
                     </textarea>
-                                                    <div class="alert alert-danger require-msg" v-if="formErrors.description" :show="dismissCountDown" dismissible variant="danger" @dismissed="dismissCountdown=0"
-                             @dismiss-count-down="countDownChanged">
-                                    {{ this.$t('exoplatform.gamification.badge.description.required','Description needed score is required please enter a value')}}
-                                </div>
+
                             </div>
 
                             <form id="neededScoreInputGroup" >
                                 <label id="Needed" label-for="neededScoreInput" class="pt-0">{{ this.$t('exoplatform.gamification.badge.score','Score')}}:</label>
                                 <input id="neededScoreInput" type="number" v-model="editedbadge.neededScore" class="form-control" required placeholder="Enter badge's needed score">
-
-                                <div class="alert alert-danger require-msg" v-if="formErrors.neededScore" :show="dismissCountDown" dismissible variant="danger" @dismissed="dismissCountdown=0"
-                                         @dismiss-count-down="countDownChanged">
-                                    {{ this.$t('exoplatform.gamification.badge.score.required','Badge needed score is required please enter a value')}}
-                                </div>
                             </form>
                             <form id="iconInputGroup">
                                   <label for="iconInput"  class="pt-0"> {{ this.$t('exoplatform.gamification.badge.icon','Icon')}}: </label>
@@ -84,12 +67,7 @@
                                          accept="image/jpeg, image/png, image/gif"
                                          placeholder="+"
                                          @change="onFilePicked">
-
-                                        <div class="alert alert-danger require-msg" v-if="formErrors.uploadId" :show="dismissCountDown" dismissible variant="danger" @dismissed="dismissCountdown=0"
-                                         @dismiss-count-down="countDownChanged">
-                                    {{ this.$t('exoplatform.gamification.badge.icon.required','Badge icon is required please enter a value')}}
-                                </div>
-                                         
+                                        
                               </form> 
 
                             <form id="domainSelectboxGroup">
@@ -105,10 +83,6 @@
                                         }}
                                     </option>
                                 </select>
-                                                                <div class="alert alert-danger require-msg" v-if="formErrors.neededScore" :show="dismissCountDown" dismissible variant="danger" @dismissed="dismissCountdown=0"
-                                         @dismiss-count-down="countDownChanged">
-                                    {{ this.$t('exoplatform.gamification.badge.score.required','Badge needed score is required please enter a value')}}
-                                </div>
                             </form>
 
 
