@@ -25,7 +25,7 @@
        color: #fff;
 }
      
-     a{
+     a:hover{
          text-decoration: none;
          background-color: transparent;
          -webkit-text-decoration-skip: objects;
@@ -73,8 +73,8 @@ develop
     /* Fix/ PLF-8495 */
     .tooltip.fade.bottom.in {
         opacity: 1 !important;
-    }
-    .uiCompanyNavigationPortlet .uiCompanyNavigations > li > a, h5 {
+    }    
+    .uiCompanyNavigationPortlet .uiCompanyNavigations > li > a {
         box-sizing: content-box;
         font-family: Helvetica, arial, sans-serif;
     }
@@ -83,9 +83,5 @@ develop
         background-color: transparent;
         -webkit-text-decoration-skip: objects;
     }
-    .uiCompanyNavigationPortlet .title, .uiSpaceNavigationPortlet .title {
-        font-size: 14px;
-    }
-    
-    
+
 </style>
