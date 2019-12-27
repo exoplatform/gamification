@@ -32,21 +32,6 @@
          background-color: transparent;
          -webkit-text-decoration-skip: objects;
      }
-    .alert{
-develop
-        max-width: 98%;
-        margin: 0 auto;
-        top: 7px;
-    }
-
-    .alert-dismissible .close {
-        padding: 0.5rem 1.25rem !important;
-    }
-
-    .alert .close {
-        line-height: 16px;
-    }
-
     .btn-primary:hover {
         background-color: #476a9c;
     }
@@ -61,7 +46,6 @@ develop
         font-size: 14px !important;
         font-family: Helvetica, arial, sans-serif;
     }
-
     .uiBreadcumbsNavigationPortlet .uiBreadcumbsNavigations .navItemSelected {
         font-size: 14px;
     }
@@ -79,8 +63,7 @@ develop
         opacity: 1 !important;
         text-transform: uppercase !important;
     }
-
-    .uiCompanyNavigationPortlet .uiCompanyNavigations > li > a {
+    .uiCompanyNavigationPortlet .uiCompanyNavigations > li > a, h5 {
         box-sizing: content-box;
         font-family: Helvetica, arial, sans-serif;
     }

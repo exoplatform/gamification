@@ -56,7 +56,6 @@
          font-family: Helvetica, arial, sans-serif;
      }
 
-
     .uiBreadcumbsNavigationPortlet .uiBreadcumbsNavigations .navItemSelected {
         font-size: 14px;
     }
@@ -75,7 +74,7 @@
         opacity: 1 !important;
         text-transform: uppercase !important;
     }
-    .uiCompanyNavigationPortlet .uiCompanyNavigations > li > a {
+    .uiCompanyNavigationPortlet .uiCompanyNavigations > li > a, h5 {
         box-sizing: content-box;
         font-family: Helvetica, arial, sans-serif;
     }
@@ -84,5 +83,7 @@
         background-color: transparent;
         -webkit-text-decoration-skip: objects;
     }
-    
+      .uiCompanyNavigationPortlet .title, .uiSpaceNavigationPortlet .title {
+            font-size: 14px;
+        }
 </style>
