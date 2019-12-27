@@ -19,6 +19,8 @@
      .UIToolbarContainerDark a.dropdown-toggle {
     color: #fff;
       text-decoration: none;
+         font-size: 14px!important;
+         font-family: Helvetica, arial, sans-serif;
 }
  .UIToolbarContainerDark a.dropdown-toggle:hover, .UIToolbarContainerDark a.dropdown-toggle:focus{
       text-decoration: none;
@@ -51,12 +53,14 @@ develop
 
     .dropdown-toggle:after {
         display: none;
+        font-size: 14px !important;
+        font-family: Helvetica, arial, sans-serif;
     }
 
     .dropdown-menu {
-        font-size: inherit;
+        font-size: 14px !important;
+        font-family: Helvetica, arial, sans-serif;
     }
-
 
     .uiBreadcumbsNavigationPortlet .uiBreadcumbsNavigations .navItemSelected {
         font-size: 14px;
@@ -73,7 +77,9 @@ develop
     /* Fix/ PLF-8495 */
     .tooltip.fade.bottom.in {
         opacity: 1 !important;
-    }    
+        text-transform: uppercase !important;
+    }
+
     .uiCompanyNavigationPortlet .uiCompanyNavigations > li > a {
         box-sizing: content-box;
         font-family: Helvetica, arial, sans-serif;
@@ -82,6 +88,9 @@ develop
         text-decoration: none;
         background-color: transparent;
         -webkit-text-decoration-skip: objects;
+    }
+    .uiCompanyNavigationPortlet .title, .uiSpaceNavigationPortlet .title {
+        font-size: 14px;
     }
 
 </style>
