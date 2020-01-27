@@ -33,7 +33,7 @@ public class RuleNameUpgradePlugin extends UpgradeProductPlugin {
              .filter(ruleDTO -> ruleDTO.getTitle().startsWith("GAMIFICATION_DEFAULT_DATA_PREFIX"))
              .forEach(ruleDTO -> {
                  String ruleTitle= ruleDTO.getTitle();
-                 ruleTitle=ruleTitle.replace("GAMIFICATION_DEFAULT_DATA_PREFIX_",
+                 ruleTitle=ruleTitle.replace("GAMIFICATION_DEFAULT_DATA_PREFIX",
                                              GamificationConstant.GAMIFICATION_DEFAULT_DATA_PREFIX);
                  ruleDTO.setTitle(ruleTitle);
                  try {
