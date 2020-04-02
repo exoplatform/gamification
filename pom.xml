@@ -29,7 +29,7 @@
 
     <groupId>org.exoplatform.addons.gamification</groupId>
     <artifactId>gamification</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.2-spaces-groups-binding-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>eXo Gamification</name>
     <description>eXo Gamification extension</description>
@@ -58,7 +58,7 @@
         <!-- Dependencies versions                    -->
         <!-- **************************************** -->
         <org.exoplatform.depmgt.version>13</org.exoplatform.depmgt.version>
-        <org.exoplatform.platform.version>5.3.2</org.exoplatform.platform.version>
+        <org.exoplatform.platform.version>5.3.2-spaces-groups-binding-SNAPSHOT</org.exoplatform.platform.version>
         <!-- for tests -->
         <junit.version>4.12</junit.version>
         <!-- Liquibase stack -->
