@@ -29,7 +29,7 @@
 
     <groupId>org.exoplatform.addons.gamification</groupId>
     <artifactId>gamification</artifactId>
-    <version>1.2.2-spaces-groups-binding-SNAPSHOT</version>
+    <version>1.2.2-spaces-groups-binding-01</version>
     <packaging>pom</packaging>
     <name>eXo Gamification</name>
     <description>eXo Gamification extension</description>
@@ -44,7 +44,7 @@
     <scm>
         <connection>scm:git:git://github.com/exoplatform/gamification.git</connection>
         <developerConnection>scm:git:git@github.com:exoplatform/gamification.git</developerConnection>
-        <tag>1.2.2</tag>
+        <tag>1.2.2-spaces-groups-binding-01</tag>
         <url>https://github.com/exo-addons/gamification</url>
     </scm>
 

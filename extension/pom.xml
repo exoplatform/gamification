@@ -24,7 +24,7 @@
     <parent>
         <groupId>org.exoplatform.addons.gamification</groupId>
         <artifactId>gamification</artifactId>
-        <version>1.2.2-spaces-groups-binding-SNAPSHOT</version>
+        <version>1.2.2-spaces-groups-binding-01</version>
     </parent>
 
     <artifactId>gamification-extension</artifactId>
