@@ -7,8 +7,7 @@
         <node>
             <uri>gamification</uri>
             <name>gamification</name>
-            <label>Gamification</label>
-            <label>Gamification</label>
+            <label>#{gamification.intranet.gamification}</label>
             <page-reference>group::/platform/administrators::gamification</page-reference>
             <node>
                 <uri>rules</uri>
