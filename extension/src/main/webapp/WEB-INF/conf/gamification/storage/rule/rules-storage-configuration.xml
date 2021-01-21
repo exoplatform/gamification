@@ -350,7 +350,7 @@
                 </value-param>
                 <value-param>
                     <name>rule-description</name>
-                    <value>You posted an activity</value>
+                    <value>You posted an activity on a space stream</value>
                 </value-param>
                 <value-param>
                     <name>rule-event</name>
@@ -453,7 +453,7 @@
                 </value-param>
                 <value-param>
                     <name>rule-description</name>
-                    <value>You posted an activity</value>
+                    <value>You posted an activity on a target user stream</value>
                 </value-param>
                 <value-param>
                     <name>rule-event</name>
@@ -487,7 +487,7 @@
                 </value-param>
                 <value-param>
                     <name>rule-description</name>
-                    <value>You posted an activity</value>
+                    <value>You posted an activity on your stream</value>
                 </value-param>
                 <value-param>
                     <name>rule-event</name>
@@ -524,7 +524,7 @@
                 </value-param>
                 <value-param>
                     <name>rule-description</name>
-                    <value>You liked a post</value>
+                    <value>You liked a post on a network stream</value>
                 </value-param>
                 <value-param>
                     <name>rule-event</name>
@@ -558,7 +558,7 @@
                 </value-param>
                 <value-param>
                     <name>rule-description</name>
-                    <value>You liked a post</value>
+                    <value>You liked a post on a space stream</value>
                 </value-param>
                 <value-param>
                     <name>rule-event</name>
@@ -592,7 +592,7 @@
                 </value-param>
                 <value-param>
                     <name>rule-description</name>
-                    <value>Someone liked your post</value>
+                    <value>Someone liked your post on a space stream target</value>
                 </value-param>
                 <value-param>
                     <name>rule-event</name>
@@ -626,7 +626,7 @@
                 </value-param>
                 <value-param>
                     <name>rule-description</name>
-                    <value>Someone liked your post</value>
+                    <value>Someone liked your post on a user target stream</value>
                 </value-param>
                 <value-param>
                     <name>rule-event</name>
