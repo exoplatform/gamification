@@ -61,7 +61,7 @@
         <org.exoplatform.depmgt.version>13</org.exoplatform.depmgt.version>
         <org.exoplatform.platform.version>5.3.x-SNAPSHOT</org.exoplatform.platform.version>
         <!-- for tests -->
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <!-- Liquibase stack -->
         <org.liquibase.version>3.5.5</org.liquibase.version>
         <org.liquibase-hibernate4.version>3.6</org.liquibase-hibernate4.version>
